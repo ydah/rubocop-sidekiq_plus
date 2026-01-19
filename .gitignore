@@ -8,3 +8,4 @@
 /tmp/
 /.idea/
 .rspec_status
+Gemfile.lock
