@@ -13,6 +13,8 @@ module RuboCop
       #   NotifyJob.perform_async(user_id)
       #
       class PiiInArguments < Base
+        include ArgumentTraversal
+
         MSG = 'Avoid passing PII in Sidekiq job arguments.'
 
         DEFAULT_PATTERNS = %w[email phone address].freeze
@@ -21,7 +23,7 @@ module RuboCop
 
         def on_send(node)
           perform_call?(node) do
-            node.arguments.each { |arg| check_argument(arg, allow_literal: true) }
+            check_arguments(node.arguments, allow_literal: true)
           end
         end
 
@@ -33,7 +35,7 @@ module RuboCop
           return check_send(arg) if arg.send_type?
           return check_hash(arg) if arg.hash_type?
 
-          check_array(arg, allow_literal) if arg.array_type?
+          check_array_elements(arg, allow_literal: allow_literal) if arg.array_type?
         end
 
         def literal_node?(arg)
@@ -72,10 +74,6 @@ module RuboCop
           key = pair.key
           add_offense(key) if key && (key.sym_type? || key.str_type?) && pii_name?(key.value.to_s)
           check_argument(pair.value, allow_literal: false) if pair.value
-        end
-
-        def check_array(arg, allow_literal)
-          arg.each_value { |value| check_argument(value, allow_literal: allow_literal) }
         end
 
         def pii_name?(name)

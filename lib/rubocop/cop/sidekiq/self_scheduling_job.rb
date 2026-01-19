@@ -12,6 +12,8 @@ module RuboCop
       #   end
       #
       class SelfSchedulingJob < Base
+        include ClassNameHelper
+
         MSG = 'Avoid self-scheduling jobs. Use Sidekiq Cron or scheduler instead.'
 
         RESTRICT_ON_SEND = %i[perform_async perform_in perform_at].freeze
@@ -32,13 +34,6 @@ module RuboCop
         end
 
         private
-
-        def class_name(class_node)
-          identifier = class_node&.identifier
-          return unless identifier&.const_type?
-
-          identifier.const_name.split('::').last
-        end
 
         def self_receiver?(receiver, class_name)
           return false unless receiver

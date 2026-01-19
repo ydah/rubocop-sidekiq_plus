@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require_relative 'sidekiq/base'
+require_relative 'sidekiq/mixin/argument_traversal'
+require_relative 'sidekiq/mixin/class_name_helper'
+require_relative 'sidekiq/mixin/perform_methods'
 require_relative 'sidekiq/active_record_argument'
 require_relative 'sidekiq/avoid_find_each_in_job'
 require_relative 'sidekiq/consistent_job_suffix'

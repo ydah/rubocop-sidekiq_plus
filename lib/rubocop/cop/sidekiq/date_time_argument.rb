@@ -20,18 +20,19 @@ module RuboCop
       #   MyJob.perform_async(Time.current.to_i)
       #
       class DateTimeArgument < Base
+        include ArgumentTraversal
+        include PerformMethods
+
         MSG = 'Do not pass Date/Time objects to Sidekiq jobs. ' \
               'Convert to a string or timestamp first.'
 
-        PERFORM_METHODS = %i[perform_async perform_in perform_at perform_bulk].freeze
-
-        RESTRICT_ON_SEND = PERFORM_METHODS
+        RESTRICT_ON_SEND = PerformMethods::PERFORM_METHODS
 
         TIME_METHODS = %i[now current zone].freeze
         DATE_METHODS = %i[today yesterday tomorrow current].freeze
 
         def_node_matcher :sidekiq_perform_call?, <<~PATTERN
-          (send _ {#{PERFORM_METHODS.map(&:inspect).join(' ')}} $...)
+          (send _ {#{PerformMethods::PERFORM_METHODS.map(&:inspect).join(' ')}} $...)
         PATTERN
 
         def_node_matcher :time_constructor?, <<~PATTERN
@@ -54,12 +55,6 @@ module RuboCop
 
         private
 
-        def check_arguments(args)
-          args.each do |arg|
-            check_argument(arg)
-          end
-        end
-
         def check_argument(arg)
           if datetime_object?(arg)
             add_offense(arg)
@@ -74,18 +69,6 @@ module RuboCop
           return false unless node.send_type?
 
           time_constructor?(node) || date_constructor?(node) || datetime_constructor?(node)
-        end
-
-        def check_hash_values(hash_node)
-          hash_node.each_pair do |_key, value|
-            check_argument(value)
-          end
-        end
-
-        def check_array_elements(array_node)
-          array_node.each_child_node do |element|
-            check_argument(element)
-          end
         end
       end
     end

@@ -12,6 +12,8 @@ module RuboCop
       #   end
       #
       class JobFileNaming < Base
+        include ClassNameHelper
+
         MSG = 'Job file name should match the class name.'
 
         def on_class(node)
@@ -28,19 +30,6 @@ module RuboCop
           return if expected == actual
 
           add_offense(node.loc.keyword)
-        end
-
-        private
-
-        def class_name(node)
-          identifier = node.identifier
-          return unless identifier&.const_type?
-
-          identifier.const_name.split('::').last
-        end
-
-        def underscore(name)
-          name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
         end
       end
     end

@@ -17,6 +17,8 @@ module RuboCop
       #   end
       #
       class ConsistentJobSuffix < Base
+        include ClassNameHelper
+
         MSG = 'Use `%<suffix>s` suffix for Sidekiq job class names.'
 
         def on_class(node)
@@ -35,13 +37,6 @@ module RuboCop
 
         def enforced_suffix
           cop_config.fetch('EnforcedSuffix', 'Job')
-        end
-
-        def class_name(node)
-          identifier = node.identifier
-          return unless identifier&.const_type?
-
-          identifier.const_name.split('::').last
         end
       end
     end

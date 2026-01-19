@@ -30,15 +30,15 @@ module RuboCop
       #   end
       #
       class TransactionLeak < Base
+        include PerformMethods
+
         MSG = 'Do not enqueue Sidekiq jobs inside database transactions. ' \
               'The job may run before the transaction commits.'
 
-        PERFORM_METHODS = %i[perform_async perform_in perform_at perform_bulk].freeze
-
-        RESTRICT_ON_SEND = PERFORM_METHODS
+        RESTRICT_ON_SEND = PerformMethods::PERFORM_METHODS
 
         def_node_matcher :perform_call?, <<~PATTERN
-          (send _ {#{PERFORM_METHODS.map(&:inspect).join(' ')}} ...)
+          (send _ {#{PerformMethods::PERFORM_METHODS.map(&:inspect).join(' ')}} ...)
         PATTERN
 
         def on_send(node)

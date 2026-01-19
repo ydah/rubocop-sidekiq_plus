@@ -23,17 +23,18 @@ module RuboCop
       #   MyJob.perform_async(user_id)
       #
       class ActiveRecordArgument < Base
+        include ArgumentTraversal
+        include PerformMethods
+
         MSG = 'Do not pass ActiveRecord objects to Sidekiq jobs. ' \
               'Pass the id and fetch the record in the job instead.'
 
-        PERFORM_METHODS = %i[perform_async perform_in perform_at perform_bulk].freeze
-
-        RESTRICT_ON_SEND = PERFORM_METHODS
+        RESTRICT_ON_SEND = PerformMethods::PERFORM_METHODS
 
         FINDER_METHODS = %i[find find_by find_by! first last take where].freeze
 
         def_node_matcher :sidekiq_perform_call?, <<~PATTERN
-          (send _ {#{PERFORM_METHODS.map(&:inspect).join(' ')}} $...)
+          (send _ {#{PerformMethods::PERFORM_METHODS.map(&:inspect).join(' ')}} $...)
         PATTERN
 
         def_node_matcher :active_record_finder?, <<~PATTERN
@@ -52,12 +53,6 @@ module RuboCop
 
         private
 
-        def check_arguments(args)
-          args.each do |arg|
-            check_argument(arg)
-          end
-        end
-
         def check_argument(arg)
           if active_record_object?(arg)
             add_offense(arg)
@@ -72,18 +67,6 @@ module RuboCop
           return false unless node.send_type?
 
           active_record_finder?(node) || chained_finder?(node)
-        end
-
-        def check_hash_values(hash_node)
-          hash_node.each_pair do |_key, value|
-            check_argument(value)
-          end
-        end
-
-        def check_array_elements(array_node)
-          array_node.each_child_node do |element|
-            check_argument(element)
-          end
         end
       end
     end

@@ -20,12 +20,12 @@ module RuboCop
       #   MyModule::MyJob.perform_async(args)
       #
       class ConstantJobClassName < Base
+        include PerformMethods
+
         MSG = 'Use a constant class name for Sidekiq jobs. ' \
               'Dynamic job class names are harder to trace and may be insecure.'
 
-        PERFORM_METHODS = %i[perform_async perform_in perform_at perform_bulk].freeze
-
-        RESTRICT_ON_SEND = PERFORM_METHODS
+        RESTRICT_ON_SEND = PerformMethods::PERFORM_METHODS
 
         def on_send(node)
           return unless perform_method?(node)
@@ -35,10 +35,6 @@ module RuboCop
         end
 
         private
-
-        def perform_method?(node)
-          PERFORM_METHODS.include?(node.method_name)
-        end
 
         def constant_receiver?(node)
           receiver = node.receiver
