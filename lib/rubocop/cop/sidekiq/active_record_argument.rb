@@ -24,17 +24,16 @@ module RuboCop
       #
       class ActiveRecordArgument < Base
         include ArgumentTraversal
-        include PerformMethods
 
         MSG = 'Do not pass ActiveRecord objects to Sidekiq jobs. ' \
               'Pass the id and fetch the record in the job instead.'
 
-        RESTRICT_ON_SEND = PerformMethods::PERFORM_METHODS
+        RESTRICT_ON_SEND = PerformMethods.all
 
         FINDER_METHODS = %i[find find_by find_by! first last take where].freeze
 
         def_node_matcher :sidekiq_perform_call?, <<~PATTERN
-          (send _ {#{PerformMethods::PERFORM_METHODS.map(&:inspect).join(' ')}} $...)
+          (send _ {#{PerformMethods.all.map(&:inspect).join(' ')}} $...)
         PATTERN
 
         def_node_matcher :active_record_finder?, <<~PATTERN

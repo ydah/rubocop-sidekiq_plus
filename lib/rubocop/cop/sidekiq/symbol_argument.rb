@@ -22,14 +22,13 @@ module RuboCop
       class SymbolArgument < Base
         extend AutoCorrector
         include ArgumentTraversal
-        include PerformMethods
 
         MSG = 'Do not pass symbols to Sidekiq jobs. Use strings instead.'
 
-        RESTRICT_ON_SEND = PerformMethods::PERFORM_METHODS
+        RESTRICT_ON_SEND = PerformMethods.all
 
         def_node_matcher :sidekiq_perform_call?, <<~PATTERN
-          (send _ {#{PerformMethods::PERFORM_METHODS.map(&:inspect).join(' ')}} $...)
+          (send _ {#{RESTRICT_ON_SEND.map(&:inspect).join(' ')}} $...)
         PATTERN
 
         def on_send(node)

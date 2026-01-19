@@ -21,7 +21,7 @@ module RuboCop
           password passwd pwd token api_key secret credit_card card_number cvv ssn
         ].freeze
 
-        RESTRICT_ON_SEND = %i[perform_async perform_in perform_at perform_bulk].freeze
+        RESTRICT_ON_SEND = PerformMethods.all
 
         def on_send(node)
           perform_call?(node) do

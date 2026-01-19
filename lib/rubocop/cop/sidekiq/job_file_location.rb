@@ -17,6 +17,8 @@ module RuboCop
       #   end
       #
       class JobFileLocation < Base
+        include ProcessedSourcePath
+
         MSG = 'Place Sidekiq job classes under %<dirs>s.'
 
         DEFAULT_DIRECTORIES = ['app/jobs', 'app/workers'].freeze
@@ -24,8 +26,8 @@ module RuboCop
         def on_class(node)
           return unless sidekiq_job_class?(node)
 
-          file_path = processed_source.file_path
-          return if file_path.nil? || file_path == '(string)'
+          file_path = processed_file_path
+          return unless file_path
 
           return if in_allowed_directory?(file_path)
 

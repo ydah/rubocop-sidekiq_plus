@@ -21,18 +21,17 @@ module RuboCop
       #
       class DateTimeArgument < Base
         include ArgumentTraversal
-        include PerformMethods
 
         MSG = 'Do not pass Date/Time objects to Sidekiq jobs. ' \
               'Convert to a string or timestamp first.'
 
-        RESTRICT_ON_SEND = PerformMethods::PERFORM_METHODS
+        RESTRICT_ON_SEND = PerformMethods.all
 
         TIME_METHODS = %i[now current zone].freeze
         DATE_METHODS = %i[today yesterday tomorrow current].freeze
 
         def_node_matcher :sidekiq_perform_call?, <<~PATTERN
-          (send _ {#{PerformMethods::PERFORM_METHODS.map(&:inspect).join(' ')}} $...)
+          (send _ {#{RESTRICT_ON_SEND.map(&:inspect).join(' ')}} $...)
         PATTERN
 
         def_node_matcher :time_constructor?, <<~PATTERN

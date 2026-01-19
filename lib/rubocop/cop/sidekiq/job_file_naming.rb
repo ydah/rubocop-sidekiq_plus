@@ -13,14 +13,15 @@ module RuboCop
       #
       class JobFileNaming < Base
         include ClassNameHelper
+        include ProcessedSourcePath
 
         MSG = 'Job file name should match the class name.'
 
         def on_class(node)
           return unless sidekiq_job_class?(node)
 
-          file_path = processed_source.file_path
-          return if file_path.nil? || file_path == '(string)'
+          file_path = processed_file_path
+          return unless file_path
 
           class_name = class_name(node)
           return unless class_name
