@@ -8,6 +8,12 @@ Sidekiq/ActiveRecordArgument:
   Enabled: true
   VersionAdded: '0.1'
 
+Sidekiq/AvoidFindEachInJob:
+  Description: 'Avoid processing large datasets inside a single Sidekiq job.'
+  Enabled: true
+  VersionAdded: '0.1'
+  AllowedMethods: []
+
 Sidekiq/ConstantJobClassName:
   Description: 'Ensure job class names are constant.'
   Enabled: true
@@ -17,6 +23,38 @@ Sidekiq/DateTimeArgument:
   Description: 'Do not pass Date/Time objects to Sidekiq jobs.'
   Enabled: true
   VersionAdded: '0.1'
+
+Sidekiq/DeprecatedDefaultWorkerOptions:
+  Description: 'Detect deprecated Sidekiq.default_worker_options usage.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/DeprecatedDelayExtension:
+  Description: 'Detect deprecated delay extension usage.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/DeprecatedWorkerModule:
+  Description: 'Detect Sidekiq::Worker usage and prefer Sidekiq::Job.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/HugeJobArguments:
+  Description: 'Avoid passing potentially huge arguments to Sidekiq jobs.'
+  Enabled: true
+  VersionAdded: '0.1'
+  MaxArraySize: 10
+  MaxHashSize: 10
+  MaxPluckColumns: 3
+
+Sidekiq/IneffecientEnqueue:
+  Description: 'Prefer perform_bulk over perform_async inside loops.'
+  Enabled: true
+  VersionAdded: '0.1'
+  AllowedMethods:
+    - each
+    - find_each
+    - find_in_batches
 
 Sidekiq/JobInclude:
   Description: 'Prefer including Sidekiq::Job over Sidekiq::Worker.'
@@ -75,3 +113,123 @@ Sidekiq/TransactionLeak:
   Description: 'Do not enqueue jobs inside database transactions.'
   Enabled: true
   VersionAdded: '0.1'
+
+Sidekiq/UnknownSidekiqOption:
+  Description: 'Check sidekiq_options for unknown or unsupported keys.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/ConsistentJobSuffix:
+  Description: 'Enforce consistent job class name suffix.'
+  Enabled: false
+  VersionAdded: '0.3'
+  EnforcedSuffix: Job
+
+Sidekiq/DatabaseConnectionLeak:
+  Description: 'Ensure database connections are properly released.'
+  Enabled: true
+  VersionAdded: '0.3'
+
+Sidekiq/ExcessiveRetry:
+  Description: 'Detect excessive retry counts.'
+  Enabled: false
+  VersionAdded: '0.4'
+  MaxRetries: 25
+
+Sidekiq/JobDependency:
+  Description: 'Detect implicit job dependencies, suggest Batches.'
+  Enabled: false
+  VersionAdded: '0.5'
+
+Sidekiq/JobFileLocation:
+  Description: 'Ensure job classes are in app/jobs or app/workers.'
+  Enabled: false
+  VersionAdded: '0.3'
+  AllowedDirectories:
+    - app/jobs
+    - app/workers
+
+Sidekiq/JobFileNaming:
+  Description: 'Ensure job file names match class names.'
+  Enabled: false
+  VersionAdded: '0.4'
+
+Sidekiq/MissingLogging:
+  Description: 'Encourage logging in jobs.'
+  Enabled: false
+  VersionAdded: '0.5'
+
+Sidekiq/MissingTimeout:
+  Description: 'Ensure network operations have timeouts configured.'
+  Enabled: true
+  VersionAdded: '0.2'
+
+Sidekiq/MixedRetryStrategies:
+  Description: 'Avoid mixing ActiveJob retry_on with Sidekiq retries.'
+  Enabled: true
+  VersionAdded: '0.2'
+
+Sidekiq/PerformAsyncInTest:
+  Description: 'Prefer perform_inline over perform_async in tests.'
+  Enabled: false
+  VersionAdded: '0.5'
+  Include:
+    - spec/**/*_spec.rb
+    - test/**/*_test.rb
+
+Sidekiq/PiiInArguments:
+  Description: 'Avoid passing PII in job arguments.'
+  Enabled: false
+  VersionAdded: '0.4'
+  PiiPatterns:
+    - email
+    - phone
+    - address
+
+Sidekiq/PreferSidekiqOverActiveJob:
+  Description: 'Recommend using Sidekiq directly instead of ActiveJob.'
+  Enabled: false
+  VersionAdded: '0.5'
+
+Sidekiq/RedisInJob:
+  Description: 'Use Sidekiq.redis instead of creating new Redis connections.'
+  Enabled: true
+  VersionAdded: '0.2'
+
+Sidekiq/RetryZero:
+  Description: 'Prefer retry: false over retry: 0 for clarity.'
+  Enabled: false
+  VersionAdded: '0.4'
+
+Sidekiq/SelfSchedulingJob:
+  Description: 'Detect jobs that reschedule themselves.'
+  Enabled: false
+  VersionAdded: '0.5'
+
+Sidekiq/SensitiveDataInArguments:
+  Description: 'Avoid passing sensitive data in job arguments.'
+  Enabled: true
+  VersionAdded: '0.2'
+  SensitivePatterns:
+    - password
+    - passwd
+    - pwd
+    - token
+    - api_key
+    - secret
+    - credit_card
+    - card_number
+    - cvv
+    - ssn
+
+Sidekiq/SilentRescue:
+  Description: 'Avoid silently swallowing exceptions in jobs.'
+  Enabled: true
+  VersionAdded: '0.2'
+  AllowedExceptions:
+    - ActiveRecord::RecordNotFound
+
+Sidekiq/UsingPutsOrPrint:
+  Description: 'Use logger instead of puts/print in jobs.'
+  Enabled: true
+  VersionAdded: '0.3'

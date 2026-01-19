@@ -43,21 +43,85 @@ require:
 
 Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
 
+### Sidekiq/AvoidFindEachInJob
+
+Do not process large datasets within a single Sidekiq job. Split work into smaller jobs instead.
+
+### Sidekiq/ConsistentJobSuffix
+
+Enforce consistent job class name suffix (Job or Worker).
+
 ### Sidekiq/ConstantJobClassName
 
 Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
+
+### Sidekiq/DatabaseConnectionLeak
+
+Avoid using `ActiveRecord::Base.connection` directly in jobs. Use `connection_pool.with_connection`.
 
 ### Sidekiq/DateTimeArgument
 
 Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
 
+### Sidekiq/DeprecatedDefaultWorkerOptions
+
+Detect deprecated `Sidekiq.default_worker_options` usage. Use `Sidekiq.default_job_options` instead.
+
+### Sidekiq/DeprecatedDelayExtension
+
+Avoid using the deprecated delay extension. Prefer `deliver_later` or enqueue a Sidekiq job.
+
+### Sidekiq/DeprecatedWorkerModule
+
+Avoid `Sidekiq::Worker` and use `Sidekiq::Job` instead.
+
+### Sidekiq/ExcessiveRetry
+
+Detect excessive retry counts in `sidekiq_options`.
+
+### Sidekiq/HugeJobArguments
+
+Avoid passing large arguments to Sidekiq jobs. Pass IDs and load records in the job instead.
+
+### Sidekiq/IneffecientEnqueue
+
+Avoid calling `perform_async` inside loops. Use `perform_bulk` instead.
+
+### Sidekiq/JobDependency
+
+Avoid implicit job dependencies by enqueuing jobs from other jobs.
+
+### Sidekiq/JobFileLocation
+
+Ensure job classes are located under `app/jobs` or `app/workers`.
+
+### Sidekiq/JobFileNaming
+
+Ensure job file names match the class name.
+
 ### Sidekiq/JobInclude
 
 Prefer including `Sidekiq::Job` over `Sidekiq::Worker`. Configurable with `PreferredModule` option.
 
+### Sidekiq/MissingLogging
+
+Encourage logging in job `perform` methods. Disabled by default.
+
+### Sidekiq/MissingTimeout
+
+Ensure network calls in jobs have explicit timeouts configured.
+
+### Sidekiq/MixedRetryStrategies
+
+Avoid mixing ActiveJob `retry_on` with Sidekiq retry options.
+
 ### Sidekiq/NoRescueAll
 
 Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
+
+### Sidekiq/PerformAsyncInTest
+
+Avoid `perform_async` in tests. Disabled by default.
 
 ### Sidekiq/PerformInline
 
@@ -67,13 +131,41 @@ Avoid using `perform_inline` in production code. Use `perform_async` instead.
 
 Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
 
+### Sidekiq/PiiInArguments
+
+Avoid passing PII in job arguments. Disabled by default.
+
+### Sidekiq/PreferSidekiqOverActiveJob
+
+Prefer Sidekiq::Job over ActiveJob. Disabled by default.
+
 ### Sidekiq/QueueSpecified
 
 Require explicit queue specification for jobs. Disabled by default.
 
+### Sidekiq/RedisInJob
+
+Use `Sidekiq.redis` instead of creating new Redis connections in jobs.
+
+### Sidekiq/RetryZero
+
+Prefer `retry: false` over `retry: 0` for clarity. Disabled by default.
+
 ### Sidekiq/RetrySpecified
 
 Require explicit retry configuration for jobs. Disabled by default.
+
+### Sidekiq/SelfSchedulingJob
+
+Avoid self-scheduling jobs. Disabled by default.
+
+### Sidekiq/SensitiveDataInArguments
+
+Avoid passing sensitive data in job arguments.
+
+### Sidekiq/SilentRescue
+
+Avoid silently swallowing exceptions in jobs.
 
 ### Sidekiq/SleepInJob
 
@@ -91,11 +183,30 @@ Do not create threads inside Sidekiq jobs. Use separate jobs or Sidekiq's built-
 
 Do not enqueue Sidekiq jobs inside database transactions. The job may run before the transaction commits.
 
+### Sidekiq/UnknownSidekiqOption
+
+Detect unknown or unsupported keys in `sidekiq_options`.
+
+### Sidekiq/UsingPutsOrPrint
+
+Use `logger` instead of `puts`/`print` in jobs.
+
 ## Configuration
 
 All cops are enabled by default except for:
 - `Sidekiq/QueueSpecified`
 - `Sidekiq/RetrySpecified`
+- `Sidekiq/ConsistentJobSuffix`
+- `Sidekiq/ExcessiveRetry`
+- `Sidekiq/JobDependency`
+- `Sidekiq/JobFileLocation`
+- `Sidekiq/JobFileNaming`
+- `Sidekiq/MissingLogging`
+- `Sidekiq/PerformAsyncInTest`
+- `Sidekiq/PiiInArguments`
+- `Sidekiq/PreferSidekiqOverActiveJob`
+- `Sidekiq/RetryZero`
+- `Sidekiq/SelfSchedulingJob`
 
 Example configuration:
 
