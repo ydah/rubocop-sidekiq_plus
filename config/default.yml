@@ -1,0 +1,77 @@
+---
+Sidekiq:
+  Enabled: true
+  DocumentationBaseURL: https://github.com/ydah/rubocop-sidekiq/blob/main/docs/modules/ROOT/pages
+
+Sidekiq/ActiveRecordArgument:
+  Description: 'Do not pass ActiveRecord objects to Sidekiq jobs.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/ConstantJobClassName:
+  Description: 'Ensure job class names are constant.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/DateTimeArgument:
+  Description: 'Do not pass Date/Time objects to Sidekiq jobs.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/JobInclude:
+  Description: 'Prefer including Sidekiq::Job over Sidekiq::Worker.'
+  Enabled: true
+  VersionAdded: '0.1'
+  PreferredModule: Job
+
+Sidekiq/LongRunningJob:
+  Description: 'Avoid long-running Sidekiq jobs.'
+  Enabled: false
+  VersionAdded: '0.1'
+  MaxRuntime: 3600
+
+Sidekiq/NoRescueAll:
+  Description: 'Avoid rescuing all exceptions in Sidekiq jobs.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/PerformInline:
+  Description: 'Avoid using perform_inline in production code.'
+  Enabled: true
+  VersionAdded: '0.1'
+  AllowedInTests: true
+
+Sidekiq/PerformMethodSignature:
+  Description: 'Do not use keyword arguments in perform method.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/QueueSpecified:
+  Description: 'Require explicit queue specification for jobs.'
+  Enabled: false
+  VersionAdded: '0.1'
+
+Sidekiq/RetrySpecified:
+  Description: 'Require explicit retry configuration for jobs.'
+  Enabled: false
+  VersionAdded: '0.1'
+
+Sidekiq/SleepInJob:
+  Description: 'Do not use sleep in Sidekiq jobs.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/SymbolArgument:
+  Description: 'Do not pass symbols to Sidekiq jobs.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/ThreadInJob:
+  Description: 'Do not create threads inside Sidekiq jobs.'
+  Enabled: true
+  VersionAdded: '0.1'
+
+Sidekiq/TransactionLeak:
+  Description: 'Do not enqueue jobs inside database transactions.'
+  Enabled: true
+  VersionAdded: '0.1'

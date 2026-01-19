@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "sidekiq/version"
-
-module Rubocop
+module RuboCop
   module Sidekiq
     class Error < StandardError; end
-    # Your code goes here...
+
+    PROJECT_ROOT = Pathname.new(__dir__).parent.parent.parent.expand_path.freeze
+    CONFIG_DEFAULT = PROJECT_ROOT.join('config', 'default.yml').freeze
   end
 end

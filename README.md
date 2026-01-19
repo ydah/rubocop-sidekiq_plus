@@ -1,38 +1,125 @@
-# Rubocop::Sidekiq
+# RuboCop Sidekiq
 
-TODO: Delete this and the text below, and describe your gem
+[![Gem Version](https://badge.fury.io/rb/rubocop-sidekiq.svg)](https://badge.fury.io/rb/rubocop-sidekiq)
+[![CI](https://github.com/ydah/rubocop-sidekiq/actions/workflows/ci.yml/badge.svg)](https://github.com/ydah/rubocop-sidekiq/actions/workflows/ci.yml)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rubocop/sidekiq`. To experiment with that code, run `bin/console` for an interactive prompt.
+A [RuboCop](https://github.com/rubocop/rubocop) extension focused on enforcing [Sidekiq](https://github.com/sidekiq/sidekiq) best practices and coding conventions.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Add this line to your application's Gemfile:
 
-Install the gem and add to the application's Gemfile by executing:
-
-```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+```ruby
+gem 'rubocop-sidekiq', require: false
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+And then execute:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle install
 ```
 
 ## Usage
 
-TODO: Write usage instructions here
+### RuboCop 1.72+ (Recommended)
+
+Add the following to your `.rubocop.yml`:
+
+```yaml
+plugins:
+  - rubocop-sidekiq
+```
+
+### Legacy (RuboCop < 1.72)
+
+```yaml
+require:
+  - rubocop-sidekiq
+```
+
+## Available Cops
+
+### Sidekiq/ActiveRecordArgument
+
+Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+
+### Sidekiq/ConstantJobClassName
+
+Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
+
+### Sidekiq/DateTimeArgument
+
+Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+
+### Sidekiq/JobInclude
+
+Prefer including `Sidekiq::Job` over `Sidekiq::Worker`. Configurable with `PreferredModule` option.
+
+### Sidekiq/NoRescueAll
+
+Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
+
+### Sidekiq/PerformInline
+
+Avoid using `perform_inline` in production code. Use `perform_async` instead.
+
+### Sidekiq/PerformMethodSignature
+
+Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
+
+### Sidekiq/QueueSpecified
+
+Require explicit queue specification for jobs. Disabled by default.
+
+### Sidekiq/RetrySpecified
+
+Require explicit retry configuration for jobs. Disabled by default.
+
+### Sidekiq/SleepInJob
+
+Do not use `sleep` in Sidekiq jobs. It blocks the worker thread.
+
+### Sidekiq/SymbolArgument
+
+Do not pass symbols to Sidekiq jobs. Use strings instead.
+
+### Sidekiq/ThreadInJob
+
+Do not create threads inside Sidekiq jobs. Use separate jobs or Sidekiq's built-in concurrency.
+
+### Sidekiq/TransactionLeak
+
+Do not enqueue Sidekiq jobs inside database transactions. The job may run before the transaction commits.
+
+## Configuration
+
+All cops are enabled by default except for:
+- `Sidekiq/QueueSpecified`
+- `Sidekiq/RetrySpecified`
+
+Example configuration:
+
+```yaml
+Sidekiq/JobInclude:
+  PreferredModule: Job  # or Worker
+
+Sidekiq/PerformInline:
+  AllowedInTests: true
+
+Sidekiq/QueueSpecified:
+  Enabled: true
+
+Sidekiq/RetrySpecified:
+  Enabled: true
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rubocop-sidekiq.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ydah/rubocop-sidekiq.
 
 ## License
 

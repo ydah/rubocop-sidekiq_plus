@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+require_relative 'sidekiq/base'
+require_relative 'sidekiq/active_record_argument'
+require_relative 'sidekiq/constant_job_class_name'
+require_relative 'sidekiq/date_time_argument'
+require_relative 'sidekiq/perform_method_signature'
+require_relative 'sidekiq/symbol_argument'
+require_relative 'sidekiq/thread_in_job'
+require_relative 'sidekiq/job_include'
+require_relative 'sidekiq/sleep_in_job'
+require_relative 'sidekiq/no_rescue_all'
+require_relative 'sidekiq/perform_inline'
+require_relative 'sidekiq/queue_specified'
+require_relative 'sidekiq/retry_specified'
+require_relative 'sidekiq/transaction_leak'

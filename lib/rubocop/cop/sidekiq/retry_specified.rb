@@ -1,0 +1,79 @@
+# frozen_string_literal: true
+
+module RuboCop
+  module Cop
+    module Sidekiq
+      # Checks that Sidekiq jobs have explicit retry configuration.
+      #
+      # Without explicit retry configuration, jobs use the default retry
+      # setting (25 retries). Being explicit about retry behavior makes
+      # the job's error handling clearer.
+      #
+      # @example
+      #   # bad
+      #   class MyJob
+      #     include Sidekiq::Job
+      #   end
+      #
+      #   # good
+      #   class MyJob
+      #     include Sidekiq::Job
+      #     sidekiq_options retry: 5
+      #   end
+      #
+      #   # good
+      #   class MyJob
+      #     include Sidekiq::Job
+      #     sidekiq_options retry: false
+      #   end
+      #
+      class RetrySpecified < Base
+        MSG = 'Specify retry configuration for this Sidekiq job using `sidekiq_options retry: ...`.'
+
+        def_node_matcher :sidekiq_include?, <<~PATTERN
+          (send nil? :include (const (const {nil? cbase} :Sidekiq) {:Job :Worker}))
+        PATTERN
+
+        def_node_matcher :sidekiq_options_with_retry?, <<~PATTERN
+          (send nil? :sidekiq_options (hash <(pair (sym :retry) _) ...>))
+        PATTERN
+
+        def on_class(node)
+          return unless sidekiq_job_class?(node)
+          return if retry_option?(node)
+
+          include_node = find_sidekiq_include(node)
+          add_offense(include_node) if include_node
+        end
+
+        private
+
+        def sidekiq_job_class?(class_node)
+          return false unless class_node.body
+
+          find_sidekiq_include(class_node)
+        end
+
+        def find_sidekiq_include(class_node)
+          return nil unless class_node.body
+
+          if class_node.body.begin_type?
+            class_node.body.each_child_node.find { |n| sidekiq_include?(n) }
+          elsif sidekiq_include?(class_node.body)
+            class_node.body
+          end
+        end
+
+        def retry_option?(class_node)
+          return false unless class_node.body
+
+          if class_node.body.begin_type?
+            class_node.body.each_child_node.any? { |n| sidekiq_options_with_retry?(n) }
+          else
+            sidekiq_options_with_retry?(class_node.body)
+          end
+        end
+      end
+    end
+  end
+end
