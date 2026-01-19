@@ -10,7 +10,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::SymbolArgument do
     RUBY
 
     expect_correction(<<~RUBY)
-      MyJob.perform_async('status')
+      MyJob.perform_async("status")
     RUBY
   end
 
@@ -21,7 +21,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::SymbolArgument do
     RUBY
 
     expect_correction(<<~RUBY)
-      MyJob.perform_async(key: 'value')
+      MyJob.perform_async(key: "value")
     RUBY
   end
 
@@ -32,7 +32,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::SymbolArgument do
     RUBY
 
     expect_correction(<<~RUBY)
-      MyJob.perform_in(1.hour, 'pending')
+      MyJob.perform_in(1.hour, "pending")
     RUBY
   end
 
@@ -43,7 +43,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::SymbolArgument do
     RUBY
 
     expect_correction(<<~RUBY)
-      MyJob.perform_at(Time.now, 'active')
+      MyJob.perform_at(Time.now, "active")
     RUBY
   end
 
@@ -55,7 +55,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::SymbolArgument do
     RUBY
 
     expect_correction(<<~RUBY)
-      MyJob.perform_async(['foo', 'bar'])
+      MyJob.perform_async(["foo", "bar"])
     RUBY
   end
 
@@ -87,5 +87,25 @@ RSpec.describe RuboCop::Cop::Sidekiq::SymbolArgument do
     expect_no_offenses(<<~RUBY)
       SomeClass.some_method(:symbol)
     RUBY
+  end
+
+  it 'correctly escapes symbols with quotes' do
+    expect_offense(<<~RUBY)
+      MyJob.perform_async(:'a\\'b')
+                          ^^^^^^^ Sidekiq/SymbolArgument: Do not pass symbols to Sidekiq jobs. Use strings instead.
+    RUBY
+
+    expect_correction(<<~RUBY)
+      MyJob.perform_async("a'b")
+    RUBY
+  end
+
+  it 'registers an offense for dynamic symbols without autocorrect' do
+    expect_offense(<<~'RUBY')
+      MyJob.perform_async(:"a#{b}")
+                          ^^^^^^^^ Sidekiq/SymbolArgument: Do not pass symbols to Sidekiq jobs. Use strings instead.
+    RUBY
+
+    expect_no_corrections
   end
 end

@@ -15,7 +15,7 @@ module RuboCop
       #   user_ids = users.map { |user| [user.id] }
       #   NotifyJob.perform_bulk(user_ids)
       #
-      class IneffecientEnqueue < Base
+      class InefficientEnqueue < Base
         MSG = 'Prefer `perform_bulk` over `perform_async` inside loops to reduce Redis round trips.'
 
         DEFAULT_ALLOWED_METHODS = %w[each find_each find_in_batches].freeze

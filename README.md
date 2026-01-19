@@ -83,7 +83,7 @@ Detect excessive retry counts in `sidekiq_options`.
 
 Avoid passing large arguments to Sidekiq jobs. Pass IDs and load records in the job instead.
 
-### Sidekiq/IneffecientEnqueue
+### Sidekiq/InefficientEnqueue
 
 Avoid calling `perform_async` inside loops. Use `perform_bulk` instead.
 

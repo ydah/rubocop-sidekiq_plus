@@ -43,6 +43,8 @@ module RuboCop
           case arg.type
           when :sym
             register_symbol_offense(arg)
+          when :dsym
+            add_offense(arg)
           when :hash
             check_hash_values(arg)
           when :array
@@ -57,7 +59,7 @@ module RuboCop
         end
 
         def symbol_to_string(node)
-          "'#{node.value}'"
+          node.value.to_s.inspect
         end
       end
     end

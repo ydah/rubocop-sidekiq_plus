@@ -47,7 +47,7 @@ Sidekiq/HugeJobArguments:
   MaxHashSize: 10
   MaxPluckColumns: 3
 
-Sidekiq/IneffecientEnqueue:
+Sidekiq/InefficientEnqueue:
   Description: 'Prefer perform_bulk over perform_async inside loops.'
   Enabled: true
   VersionAdded: '0.1'
@@ -61,12 +61,6 @@ Sidekiq/JobInclude:
   Enabled: true
   VersionAdded: '0.1'
   PreferredModule: Job
-
-Sidekiq/LongRunningJob:
-  Description: 'Avoid long-running Sidekiq jobs.'
-  Enabled: false
-  VersionAdded: '0.1'
-  MaxRuntime: 3600
 
 Sidekiq/NoRescueAll:
   Description: 'Avoid rescuing all exceptions in Sidekiq jobs.'

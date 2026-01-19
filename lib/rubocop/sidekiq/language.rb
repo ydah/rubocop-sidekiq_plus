@@ -8,30 +8,38 @@ module RuboCop
 
       module PerformMethods # :nodoc:
         ALL = %i[perform_async perform_in perform_at perform_bulk].freeze
-        class << self
-          def all(element = nil)
-            return ALL if element.nil?
 
-            ALL.include?(element)
+        class << self
+          def all
+            ALL
+          end
+
+          def include?(method)
+            ALL.include?(method)
           end
         end
       end
 
       module JobModules # :nodoc:
         ALL = %i[Job Worker].freeze
-        class << self
-          def all(element = nil)
-            return ALL if element.nil?
 
-            ALL.include?(element)
+        class << self
+          def all
+            ALL
+          end
+
+          def include?(name)
+            ALL.include?(name)
           end
         end
       end
 
       # @!method sidekiq_include?(node)
+      #   Matches `include Sidekiq::Job` or `include Sidekiq::Worker`
+      #   Also matches when included with other modules: `include Sidekiq::Job, OtherModule`
       def_node_matcher :sidekiq_include?, <<~PATTERN
-        (send nil? :include (const (const {nil? cbase} :Sidekiq)
-          {#{JobModules.all.map(&:inspect).join(' ')}}))
+        (send nil? :include <(const (const {nil? cbase} :Sidekiq)
+          {#{JobModules.all.map(&:inspect).join(' ')}}) ...>)
       PATTERN
 
       # @!method sidekiq_options_call?(node)
