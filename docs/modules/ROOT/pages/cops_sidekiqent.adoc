@@ -12,10 +12,10 @@
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -73,7 +73,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -132,7 +132,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -169,10 +169,10 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -229,10 +229,10 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -264,10 +264,10 @@ LIMITER = Sidekiq::Limiter.concurrent('erp', 50, wait_timeout: 0, lock_timeout: 
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -303,10 +303,10 @@ API_LIMITER = Sidekiq::Limiter.concurrent('api', 50, wait_timeout: 5)
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -347,10 +347,10 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -401,10 +401,10 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -453,10 +453,10 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -494,10 +494,10 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 

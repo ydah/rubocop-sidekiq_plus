@@ -12,10 +12,10 @@
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -60,7 +60,7 @@ batch.on(:complete, 'MyCallback#handle_complete')
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
 | -
@@ -105,7 +105,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -148,7 +148,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -205,10 +205,10 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -256,7 +256,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -315,10 +315,10 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -374,7 +374,7 @@ end
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
 | -
@@ -430,7 +430,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 

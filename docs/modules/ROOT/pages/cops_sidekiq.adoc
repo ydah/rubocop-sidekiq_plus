@@ -113,7 +113,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.3
+| 0.1
 | -
 |===
 
@@ -202,7 +202,7 @@ MyModule::MyJob.perform_async(args)
 | Enabled
 | Yes
 | No
-| 0.3
+| 0.1
 | -
 |===
 
@@ -373,7 +373,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -518,7 +518,7 @@ NotifyJob.perform_bulk(user_ids)
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -549,7 +549,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.3
+| 0.1
 | -
 |===
 
@@ -596,7 +596,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -696,7 +696,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -733,7 +733,7 @@ end
 | Enabled
 | Yes
 | No
-| 0.2
+| 0.1
 | -
 |===
 
@@ -766,7 +766,7 @@ http.read_timeout = 10
 | Enabled
 | Yes
 | No
-| 0.2
+| 0.1
 | -
 |===
 
@@ -862,7 +862,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -1006,7 +1006,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -1049,7 +1049,7 @@ NotifyJob.perform_async(user_id)
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -1125,7 +1125,7 @@ end
 | Enabled
 | Yes
 | No
-| 0.2
+| 0.1
 | -
 |===
 
@@ -1204,7 +1204,7 @@ end
 | Disabled
 | Yes
 | No
-| 0.4
+| 0.1
 | -
 |===
 
@@ -1236,7 +1236,7 @@ sidekiq_options retry: false
 | Disabled
 | Yes
 | No
-| 0.5
+| 0.1
 | -
 |===
 
@@ -1267,7 +1267,7 @@ end
 | Enabled
 | Yes
 | No
-| 0.2
+| 0.1
 | -
 |===
 
@@ -1310,7 +1310,7 @@ UserJob.perform_async(user_id)
 | Enabled
 | Yes
 | No
-| 0.2
+| 0.1
 | -
 |===
 
@@ -1574,7 +1574,7 @@ sidekiq_options queue: :critical, retry: 5
 | Enabled
 | Yes
 | No
-| 0.3
+| 0.1
 | -
 |===
 
