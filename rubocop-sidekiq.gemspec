@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = 'A RuboCop extension focused on enforcing Sidekiq best practices and coding conventions.'
   spec.homepage = 'https://github.com/ydah/rubocop-sidekiq+'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.0.0'
+  spec.required_ruby_version = '>= 2.7.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = spec.homepage
