@@ -88,7 +88,7 @@ module RuboCop
 
         def inside_conditional?(node)
           node.each_ancestor.any? do |ancestor|
-            ancestor.if_type? || ancestor.case_type? || ancestor.case_match_type?
+            ancestor.type?(:if, :case, :case_match)
           end
         end
 

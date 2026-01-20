@@ -1,41 +1,39 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::ActiveRecordArgument do
-  subject(:cop) { described_class.new }
-
+RSpec.describe RuboCop::Cop::Sidekiq::ActiveRecordArgument, :config do
   context 'with ActiveRecord finder methods' do
     it 'registers an offense for Model.find' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(User.find(1))
-                            ^^^^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                            ^^^^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
 
     it 'registers an offense for Model.find_by' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(User.find_by(email: 'test@example.com'))
-                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
 
     it 'registers an offense for Model.first' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(User.first)
-                            ^^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                            ^^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
 
     it 'registers an offense for Model.last' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(User.last)
-                            ^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                            ^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
 
     it 'registers an offense for chained queries' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(User.where(active: true).first)
-                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
   end
@@ -44,7 +42,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::ActiveRecordArgument do
     it 'registers an offense' do
       expect_offense(<<~RUBY)
         MyJob.perform_in(1.hour, User.find(1))
-                                 ^^^^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                                 ^^^^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
   end
@@ -53,7 +51,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::ActiveRecordArgument do
     it 'registers an offense' do
       expect_offense(<<~RUBY)
         MyJob.perform_at(Time.now, User.find(1))
-                                   ^^^^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                                   ^^^^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
   end
@@ -62,7 +60,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::ActiveRecordArgument do
     it 'registers an offense for ActiveRecord in hash value' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(user: User.find(1))
-                                  ^^^^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                                  ^^^^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
   end
@@ -71,8 +69,8 @@ RSpec.describe RuboCop::Cop::Sidekiq::ActiveRecordArgument do
     it 'registers an offense for ActiveRecord in array' do
       expect_offense(<<~RUBY)
         MyJob.perform_async([User.first, User.last])
-                             ^^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
-                                         ^^^^^^^^^ Sidekiq/ActiveRecordArgument: Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                             ^^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
+                                         ^^^^^^^^^ Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
       RUBY
     end
   end

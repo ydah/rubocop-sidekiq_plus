@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::DatabaseConnectionLeak do
-  subject(:cop) { described_class.new(config) }
-
+RSpec.describe RuboCop::Cop::Sidekiq::DatabaseConnectionLeak, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
   let(:cop_config) { { 'Sidekiq/DatabaseConnectionLeak' => {} } }
 

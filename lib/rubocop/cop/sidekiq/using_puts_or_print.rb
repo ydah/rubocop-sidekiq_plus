@@ -23,11 +23,12 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
 
         private
 
         def in_perform_in_sidekiq_job?(node)
-          node.each_ancestor(:def).any? { |def_node| def_node.method_name == :perform } &&
+          node.each_ancestor(:def).any? { |def_node| def_node.method?(:perform) } &&
             in_sidekiq_job?(node)
         end
       end

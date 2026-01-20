@@ -55,6 +55,7 @@ Sidekiq/InefficientEnqueue:
     - each
     - find_each
     - find_in_batches
+  MinimumIterations: ~
 
 Sidekiq/JobInclude:
   Description: 'Prefer including Sidekiq::Job over Sidekiq::Worker.'

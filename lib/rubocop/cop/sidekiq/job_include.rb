@@ -37,6 +37,7 @@ module RuboCop
 
         MODULES = %w[Job Worker].freeze
 
+        # @!method sidekiq_include(node)
         def_node_matcher :sidekiq_include, <<~PATTERN
           (send nil? :include (const (const {nil? cbase} :Sidekiq) ${:Job :Worker}))
         PATTERN
@@ -53,6 +54,7 @@ module RuboCop
             end
           end
         end
+        alias on_csend on_send
 
         private
 

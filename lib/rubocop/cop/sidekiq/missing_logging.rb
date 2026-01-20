@@ -21,7 +21,7 @@ module RuboCop
         MSG = 'Add logging to Sidekiq job perform methods.'
 
         def on_def(node)
-          return unless node.method_name == :perform
+          return unless node.method?(:perform)
           return unless in_sidekiq_job?(node)
           return if logger_call?(node)
 

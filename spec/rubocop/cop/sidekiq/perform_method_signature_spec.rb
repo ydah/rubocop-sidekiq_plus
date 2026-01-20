@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::PerformMethodSignature do
-  subject(:cop) { described_class.new }
-
-  context 'in a Sidekiq job class' do
+RSpec.describe RuboCop::Cop::Sidekiq::PerformMethodSignature, :config do
+  context 'when in a Sidekiq job class' do
     it 'registers an offense for required keyword arguments' do
       expect_offense(<<~RUBY)
         class MyJob
           include Sidekiq::Job
 
           def perform(user_id:, status:)
-                      ^^^^^^^^ Sidekiq/PerformMethodSignature: Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
-                                ^^^^^^^ Sidekiq/PerformMethodSignature: Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
+                      ^^^^^^^^ Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
+                                ^^^^^^^ Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
           end
         end
       RUBY
@@ -23,7 +21,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformMethodSignature do
           include Sidekiq::Job
 
           def perform(id, status: 'pending')
-                          ^^^^^^^^^^^^^^^^^ Sidekiq/PerformMethodSignature: Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
+                          ^^^^^^^^^^^^^^^^^ Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
           end
         end
       RUBY
@@ -35,7 +33,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformMethodSignature do
           include Sidekiq::Job
 
           def perform(**options)
-                      ^^^^^^^^^ Sidekiq/PerformMethodSignature: Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
+                      ^^^^^^^^^ Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
           end
         end
       RUBY
@@ -75,21 +73,21 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformMethodSignature do
     end
   end
 
-  context 'in a Sidekiq::Worker class' do
+  context 'when in a Sidekiq::Worker class' do
     it 'registers an offense for keyword arguments' do
       expect_offense(<<~RUBY)
         class MyJob
           include Sidekiq::Worker
 
           def perform(user_id:)
-                      ^^^^^^^^ Sidekiq/PerformMethodSignature: Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
+                      ^^^^^^^^ Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
           end
         end
       RUBY
     end
   end
 
-  context 'outside a Sidekiq job class' do
+  context 'when outside a Sidekiq job class' do
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         class MyService
@@ -100,7 +98,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformMethodSignature do
     end
   end
 
-  context 'for non-perform methods' do
+  context 'when checking non-perform methods' do
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         class MyJob

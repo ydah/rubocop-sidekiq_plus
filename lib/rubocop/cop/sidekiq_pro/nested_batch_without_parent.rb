@@ -48,6 +48,7 @@ module RuboCop
             add_offense(send_node) if batch_new?(send_node) && send_node.arguments.empty?
           end
         end
+        alias on_numblock on_block
       end
     end
   end

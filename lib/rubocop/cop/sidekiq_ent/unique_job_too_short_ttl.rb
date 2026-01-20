@@ -27,6 +27,7 @@ module RuboCop
 
         MINIMUM_TTL = 60
 
+        # @!method unique_for_value(node)
         def_node_matcher :unique_for_value, <<~PATTERN
           (send nil? :sidekiq_options (hash <(pair (sym :unique_for) $_) ...>))
         PATTERN
@@ -39,6 +40,7 @@ module RuboCop
             add_offense(value_node, message: format(MSG, minimum: minimum_ttl))
           end
         end
+        alias on_csend on_send
 
         private
 
@@ -58,7 +60,7 @@ module RuboCop
         end
 
         def extract_duration_seconds(node)
-          return unless node.receiver&.int_type? || node.receiver&.float_type?
+          return unless node.receiver&.type?(:int, :float)
 
           value = node.receiver.value.to_f
           duration_multiplier(node.method_name, value)&.to_i

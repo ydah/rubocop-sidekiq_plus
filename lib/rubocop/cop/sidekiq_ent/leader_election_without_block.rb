@@ -24,10 +24,12 @@ module RuboCop
         MSG = 'Avoid long-running operations in leader checks. ' \
               'Consider delegating work to a job.'
 
+        # @!method leader_check?(node)
         def_node_matcher :leader_check?, <<~PATTERN
           (send (const {nil? cbase} :Sidekiq) :leader?)
         PATTERN
 
+        # @!method if_leader_condition?(node)
         def_node_matcher :if_leader_condition?, <<~PATTERN
           (if (send (const {nil? cbase} :Sidekiq) :leader?) $_ $_)
         PATTERN

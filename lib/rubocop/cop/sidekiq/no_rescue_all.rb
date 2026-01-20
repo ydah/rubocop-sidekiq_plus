@@ -48,10 +48,12 @@ module RuboCop
         MSG = 'Avoid rescuing all exceptions in Sidekiq jobs. ' \
               'Rescue specific exceptions and consider re-raising.'
 
+        # @!method bare_rescue?(node)
         def_node_matcher :bare_rescue?, <<~PATTERN
           (resbody nil? ...)
         PATTERN
 
+        # @!method rescue_exception?(node)
         def_node_matcher :rescue_exception?, <<~PATTERN
           (resbody (array (const {nil? cbase} :Exception)) ...)
         PATTERN

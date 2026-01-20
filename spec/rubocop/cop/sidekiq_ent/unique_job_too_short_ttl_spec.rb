@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::SidekiqEnt::UniqueJobTooShortTTL do
-  subject(:cop) { described_class.new(config) }
-
+RSpec.describe RuboCop::Cop::SidekiqEnt::UniqueJobTooShortTTL, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
   let(:cop_config) { { 'SidekiqEnt/UniqueJobTooShortTTL' => { 'MinimumTTL' => 60 } } }
 

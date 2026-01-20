@@ -34,6 +34,7 @@ module RuboCop
 
         ALLOWED_VALUES = %i[success].freeze
 
+        # @!method unique_until_value(node)
         def_node_matcher :unique_until_value, <<~PATTERN
           (send nil? :sidekiq_options (hash <(pair (sym :unique_until) (sym $_)) ...>))
         PATTERN
@@ -45,6 +46,7 @@ module RuboCop
             add_offense(node, message: format(MSG, value: value))
           end
         end
+        alias on_csend on_send
 
         private
 

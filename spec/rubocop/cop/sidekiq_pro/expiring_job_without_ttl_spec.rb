@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::SidekiqPro::ExpiringJobWithoutTTL do
-  subject(:cop) { described_class.new(config) }
-
+RSpec.describe RuboCop::Cop::SidekiqPro::ExpiringJobWithoutTTL, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
   let(:cop_config) do
     { 'SidekiqPro/ExpiringJobWithoutTTL' => { 'MinimumTTL' => 300, 'MaximumTTL' => 604_800 } }

@@ -31,6 +31,7 @@ module RuboCop
 
           add_offense(node.receiver)
         end
+        alias on_csend on_send
 
         private
 

@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::RetrySpecified do
-  subject(:cop) { described_class.new }
-
+RSpec.describe RuboCop::Cop::Sidekiq::RetrySpecified, :config do
   context 'without retry specification' do
     it 'registers an offense' do
       expect_offense(<<~RUBY)
         class MyJob
           include Sidekiq::Job
-          ^^^^^^^^^^^^^^^^^^^^ Sidekiq/RetrySpecified: Specify retry configuration for this Sidekiq job using `sidekiq_options retry: ...`.
+          ^^^^^^^^^^^^^^^^^^^^ Specify retry configuration for this Sidekiq job using `sidekiq_options retry: ...`.
         end
       RUBY
     end
@@ -17,7 +15,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::RetrySpecified do
       expect_offense(<<~RUBY)
         class MyJob
           include Sidekiq::Worker
-          ^^^^^^^^^^^^^^^^^^^^^^^ Sidekiq/RetrySpecified: Specify retry configuration for this Sidekiq job using `sidekiq_options retry: ...`.
+          ^^^^^^^^^^^^^^^^^^^^^^^ Specify retry configuration for this Sidekiq job using `sidekiq_options retry: ...`.
         end
       RUBY
     end
@@ -57,14 +55,14 @@ RSpec.describe RuboCop::Cop::Sidekiq::RetrySpecified do
       expect_offense(<<~RUBY)
         class MyJob
           include Sidekiq::Job
-          ^^^^^^^^^^^^^^^^^^^^ Sidekiq/RetrySpecified: Specify retry configuration for this Sidekiq job using `sidekiq_options retry: ...`.
+          ^^^^^^^^^^^^^^^^^^^^ Specify retry configuration for this Sidekiq job using `sidekiq_options retry: ...`.
           sidekiq_options queue: :default
         end
       RUBY
     end
   end
 
-  context 'non-Sidekiq class' do
+  context 'when in a non-Sidekiq class' do
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         class MyService

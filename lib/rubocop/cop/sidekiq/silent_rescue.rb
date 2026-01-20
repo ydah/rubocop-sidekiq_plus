@@ -23,9 +23,10 @@ module RuboCop
       #
       class SilentRescue < Base
         MSG = 'Do not silently swallow exceptions in Sidekiq jobs. Re-raise or handle explicitly.'
+        RERAISE_METHODS = %i[raise fail].freeze
 
         def on_def(node)
-          return unless node.method_name == :perform
+          return unless node.method?(:perform)
           return unless in_sidekiq_job?(node)
 
           node.each_descendant(:resbody) do |resbody|
@@ -53,7 +54,7 @@ module RuboCop
           return false unless body
 
           body.each_descendant(:send).any? do |send|
-            send.receiver.nil? && %i[raise fail].include?(send.method_name)
+            send.receiver.nil? && RERAISE_METHODS.include?(send.method_name)
           end
         end
       end

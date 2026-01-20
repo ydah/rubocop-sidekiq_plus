@@ -16,13 +16,13 @@ module RuboCop
         MSG = 'Avoid using ActiveRecord::Base.connection directly in jobs. Use connection_pool.with_connection.'
 
         def on_def(node)
-          return unless node.method_name == :perform
+          return unless node.method?(:perform)
           return unless in_sidekiq_job?(node)
 
           node.each_descendant(:send) do |send|
             receiver = send.receiver
             next unless receiver&.const_name == 'ActiveRecord::Base'
-            next unless send.method_name == :connection
+            next unless send.method?(:connection)
 
             add_offense(send)
           end

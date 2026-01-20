@@ -17,9 +17,10 @@ module RuboCop
         MSG = 'Configure explicit timeouts for network calls in Sidekiq jobs.'
 
         HTTP_METHODS = %i[get post put delete].freeze
+        TIMEOUT_METHODS = %i[timeout= open_timeout= read_timeout=].freeze
 
         def on_def(node)
-          return unless node.method_name == :perform
+          return unless node.method?(:perform)
           return unless in_sidekiq_job?(node)
           return if timeout_configured?(node)
 
@@ -34,7 +35,7 @@ module RuboCop
 
         def timeout_configured?(def_node)
           def_node.each_descendant(:send).any? do |send|
-            %i[timeout= open_timeout= read_timeout=].include?(send.method_name)
+            TIMEOUT_METHODS.include?(send.method_name)
           end
         end
 

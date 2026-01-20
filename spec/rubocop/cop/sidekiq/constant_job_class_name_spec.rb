@@ -1,41 +1,39 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::ConstantJobClassName do
-  subject(:cop) { described_class.new }
-
+RSpec.describe RuboCop::Cop::Sidekiq::ConstantJobClassName, :config do
   context 'with dynamic class names' do
     it 'registers an offense for variable receiver' do
       expect_offense(<<~RUBY)
         job_class.perform_async(args)
-        ^^^^^^^^^ Sidekiq/ConstantJobClassName: Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
+        ^^^^^^^^^ Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
       RUBY
     end
 
     it 'registers an offense for constantize' do
       expect_offense(<<~RUBY)
         job_name.constantize.perform_async(args)
-        ^^^^^^^^^^^^^^^^^^^^ Sidekiq/ConstantJobClassName: Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
+        ^^^^^^^^^^^^^^^^^^^^ Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
       RUBY
     end
 
     it 'registers an offense for string constantize' do
       expect_offense(<<~RUBY)
         "MyJob".constantize.perform_async(args)
-        ^^^^^^^^^^^^^^^^^^^ Sidekiq/ConstantJobClassName: Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
+        ^^^^^^^^^^^^^^^^^^^ Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
       RUBY
     end
 
     it 'registers an offense for perform_in' do
       expect_offense(<<~RUBY)
         job_class.perform_in(1.hour, args)
-        ^^^^^^^^^ Sidekiq/ConstantJobClassName: Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
+        ^^^^^^^^^ Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
       RUBY
     end
 
     it 'registers an offense for perform_at' do
       expect_offense(<<~RUBY)
         job_class.perform_at(Time.now, args)
-        ^^^^^^^^^ Sidekiq/ConstantJobClassName: Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
+        ^^^^^^^^^ Use a constant class name for Sidekiq jobs. Dynamic job class names are harder to trace and may be insecure.
       RUBY
     end
   end

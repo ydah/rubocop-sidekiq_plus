@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::SidekiqEnt::UniqueJobWithoutTTL do
-  subject(:cop) { described_class.new(config) }
-
+RSpec.describe RuboCop::Cop::SidekiqEnt::UniqueJobWithoutTTL, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
   let(:cop_config) { { 'SidekiqEnt/UniqueJobWithoutTTL' => {} } }
 

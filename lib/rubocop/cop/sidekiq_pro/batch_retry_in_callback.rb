@@ -30,10 +30,12 @@ module RuboCop
       class BatchRetryInCallback < Base
         MSG = 'Jobs enqueued in batch callbacks should have retry enabled.'
 
+        # @!method callback_method?(node)
         def_node_matcher :callback_method?, <<~PATTERN
           (def {:on_complete :on_success :on_death} (args _ _) ...)
         PATTERN
 
+        # @!method perform_async_call?(node)
         def_node_matcher :perform_async_call?, <<~PATTERN
           (send (const ...) {:perform_async :perform_in :perform_at} ...)
         PATTERN
@@ -45,6 +47,7 @@ module RuboCop
             add_offense(send_node) if perform_async_call?(send_node)
           end
         end
+        alias on_defs on_def
       end
     end
   end

@@ -23,10 +23,12 @@ module RuboCop
       class QueueSpecified < Base
         MSG = 'Specify a queue for this Sidekiq job using `sidekiq_options queue: :queue_name`.'
 
+        # @!method sidekiq_include?(node)
         def_node_matcher :sidekiq_include?, <<~PATTERN
           (send nil? :include (const (const {nil? cbase} :Sidekiq) {:Job :Worker}))
         PATTERN
 
+        # @!method sidekiq_options_with_queue?(node)
         def_node_matcher :sidekiq_options_with_queue?, <<~PATTERN
           (send nil? :sidekiq_options (hash <(pair (sym :queue) _) ...>))
         PATTERN

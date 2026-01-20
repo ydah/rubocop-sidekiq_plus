@@ -34,6 +34,7 @@ module RuboCop
         MSG = 'Encrypted job has only one argument. ' \
               'Consider if encryption is necessary or add a secret bag argument.'
 
+        # @!method encryption_enabled?(node)
         def_node_matcher :encryption_enabled?, <<~PATTERN
           (send nil? :sidekiq_options (hash <(pair (sym :encrypt) {(true) (sym :true)}) ...>))
         PATTERN
@@ -49,12 +50,13 @@ module RuboCop
 
           add_offense(perform_method.loc.name) if single_id_like_argument?(perform_method)
         end
+        alias on_csend on_send
 
         private
 
         def find_perform_method(class_node)
           class_node.body&.each_descendant(:def)&.find do |def_node|
-            def_node.method_name == :perform
+            def_node.method?(:perform)
           end
         end
 

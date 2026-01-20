@@ -17,6 +17,7 @@ module RuboCop
             args.each { |arg| check_hash(arg) }
           end
         end
+        alias on_csend on_send
 
         private
 

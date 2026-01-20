@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::DeprecatedDefaultWorkerOptions do
-  subject(:cop) { described_class.new(config) }
-
+RSpec.describe RuboCop::Cop::Sidekiq::DeprecatedDefaultWorkerOptions, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
   let(:cop_config) { { 'Sidekiq/DeprecatedDefaultWorkerOptions' => {} } }
 

@@ -28,6 +28,10 @@ module RuboCop
           check_send(node.body)
         end
 
+        def on_numblock(node)
+          on_block(node)
+        end
+
         private
 
         def check_send(body_node)

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::SidekiqPro::BatchCallbackMethod do
-  subject(:cop) { described_class.new(config) }
-
+RSpec.describe RuboCop::Cop::SidekiqPro::BatchCallbackMethod, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
   let(:cop_config) { { 'SidekiqPro/BatchCallbackMethod' => {} } }
 

@@ -26,6 +26,7 @@ module RuboCop
             corrector.replace(node.loc.selector, replacement_selector(node))
           end
         end
+        alias on_csend on_send
 
         private
 

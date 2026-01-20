@@ -21,6 +21,7 @@ module RuboCop
 
         MSG = 'Sidekiq::Worker is deprecated. Use Sidekiq::Job instead.'
 
+        # @!method sidekiq_worker_include?(node)
         def_node_matcher :sidekiq_worker_include?, <<~PATTERN
           (send nil? :include (const (const {nil? cbase} :Sidekiq) :Worker))
         PATTERN
@@ -32,6 +33,7 @@ module RuboCop
             end
           end
         end
+        alias on_csend on_send
       end
     end
   end

@@ -35,6 +35,7 @@ module RuboCop
 
         RESTRICT_ON_SEND = %i[new fork].freeze
 
+        # @!method thread_creation?(node)
         def_node_matcher :thread_creation?, <<~PATTERN
           (send (const {nil? cbase} :Thread) {:new :fork} ...)
         PATTERN
@@ -45,6 +46,7 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
       end
     end
   end

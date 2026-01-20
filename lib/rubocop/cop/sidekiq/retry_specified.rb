@@ -30,10 +30,12 @@ module RuboCop
       class RetrySpecified < Base
         MSG = 'Specify retry configuration for this Sidekiq job using `sidekiq_options retry: ...`.'
 
+        # @!method sidekiq_include?(node)
         def_node_matcher :sidekiq_include?, <<~PATTERN
           (send nil? :include (const (const {nil? cbase} :Sidekiq) {:Job :Worker}))
         PATTERN
 
+        # @!method sidekiq_options_with_retry?(node)
         def_node_matcher :sidekiq_options_with_retry?, <<~PATTERN
           (send nil? :sidekiq_options (hash <(pair (sym :retry) _) ...>))
         PATTERN

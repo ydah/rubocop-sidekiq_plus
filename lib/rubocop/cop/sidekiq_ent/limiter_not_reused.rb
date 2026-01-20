@@ -51,6 +51,7 @@ module RuboCop
             add_offense(node)
           end
         end
+        alias on_csend on_send
 
         private
 
@@ -59,7 +60,7 @@ module RuboCop
         end
 
         def inside_method?(node)
-          node.each_ancestor(:def, :defs).any?
+          node.each_ancestor(:any_def).any?
         end
 
         def inside_class?(node)

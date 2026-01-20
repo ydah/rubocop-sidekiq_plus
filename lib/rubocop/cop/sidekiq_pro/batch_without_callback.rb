@@ -32,10 +32,13 @@ module RuboCop
       class BatchWithoutCallback < Base
         MSG = 'Batch should have a callback or description for tracking.'
 
+        CALLBACK_METHODS = %i[on description=].freeze
+        private_constant :CALLBACK_METHODS
+
         def on_block(node)
           return unless batch_jobs_block?(node)
 
-          batch_receiver = node.send_node.receiver
+          batch_receiver = node.receiver
           return unless batch_receiver
 
           batch_var_name = extract_variable_name(batch_receiver)
@@ -43,6 +46,7 @@ module RuboCop
 
           add_offense(node.send_node) unless callback_or_description?(node, batch_var_name)
         end
+        alias on_numblock on_block
 
         private
 
@@ -61,7 +65,7 @@ module RuboCop
 
           parent_scope.each_descendant(:send).any? do |send_node|
             receiver_matches?(send_node, batch_var_name) &&
-              %i[on description=].include?(send_node.method_name)
+              CALLBACK_METHODS.include?(send_node.method_name)
           end
         end
 
@@ -72,15 +76,15 @@ module RuboCop
           when :lvar
             send_node.receiver.children.first == batch_var_name
           when :send
-            send_node.receiver.method_name == batch_var_name
+            send_node.receiver.method?(batch_var_name)
           else
             false
           end
         end
 
         def find_parent_scope(node)
-          node.each_ancestor(:def, :defs, :block, :begin).first ||
-            node.each_ancestor.find { |n| n.type == :begin }
+          node.each_ancestor(:any_def, :block, :begin).first ||
+            node.each_ancestor.find(&:begin_type?)
         end
       end
     end

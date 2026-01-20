@@ -32,14 +32,17 @@ module RuboCop
 
         FINDER_METHODS = %i[find find_by find_by! first last take where].freeze
 
+        # @!method sidekiq_perform_call?(node)
         def_node_matcher :sidekiq_perform_call?, <<~PATTERN
           (send _ {#{PerformMethods.all.map(&:inspect).join(' ')}} $...)
         PATTERN
 
+        # @!method active_record_finder?(node)
         def_node_matcher :active_record_finder?, <<~PATTERN
           (send (const ...) {#{FINDER_METHODS.map(&:inspect).join(' ')}} ...)
         PATTERN
 
+        # @!method chained_finder?(node)
         def_node_matcher :chained_finder?, <<~PATTERN
           (send (send (const ...) ...) {#{FINDER_METHODS.map(&:inspect).join(' ')}} ...)
         PATTERN
@@ -49,6 +52,7 @@ module RuboCop
             check_arguments(args)
           end
         end
+        alias on_csend on_send
 
         private
 

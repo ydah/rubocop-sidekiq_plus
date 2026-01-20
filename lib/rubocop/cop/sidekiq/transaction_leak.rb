@@ -35,6 +35,7 @@ module RuboCop
 
         RESTRICT_ON_SEND = PerformMethods.all
 
+        # @!method perform_call?(node)
         def_node_matcher :perform_call?, <<~PATTERN
           (send _ {#{RESTRICT_ON_SEND.map(&:inspect).join(' ')}} ...)
         PATTERN
@@ -45,6 +46,7 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
 
         private
 
@@ -60,6 +62,7 @@ module RuboCop
           transaction_call?(block_node.send_node)
         end
 
+        # @!method transaction_call?(node)
         def_node_matcher :transaction_call?, <<~PATTERN
           (send _ :transaction ...)
         PATTERN

@@ -40,6 +40,7 @@ module RuboCop
         MSG = 'Periodic job `perform` should not require arguments. ' \
               'Use optional arguments or the `args` option in periodic registration.'
 
+        # @!method periodic_register?(node)
         def_node_matcher :periodic_register?, <<~PATTERN
           (send _ :register (str _) {(str $_) (const ... $_)} ...)
         PATTERN
@@ -50,6 +51,7 @@ module RuboCop
             check_job_class(node, job_class_name)
           end
         end
+        alias on_csend on_send
 
         private
 
@@ -77,13 +79,13 @@ module RuboCop
 
         def find_perform_method(class_node)
           class_node.body&.each_descendant(:def)&.find do |def_node|
-            def_node.method_name == :perform
+            def_node.method?(:perform)
           end
         end
 
         def requires_arguments?(method_node)
           method_node.arguments.any? do |arg|
-            arg.arg_type? || arg.kwarg_type?
+            arg.type?(:arg, :kwarg)
           end
         end
       end

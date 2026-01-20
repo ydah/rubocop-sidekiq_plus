@@ -38,12 +38,13 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
 
         private
 
         def in_perform_method?(node)
-          node.each_ancestor(:def, :defs).any? do |def_node|
-            def_node.method_name == :perform
+          node.each_ancestor(:any_def).any? do |def_node|
+            def_node.method?(:perform)
           end
         end
 

@@ -27,7 +27,7 @@ module RuboCop
         private
 
         def retry_on_call?(class_node)
-          class_node.each_descendant(:send).any? { |send| send.method_name == :retry_on }
+          class_node.each_descendant(:send).any? { |send| send.method?(:retry_on) }
         end
 
         def sidekiq_retry_option_nodes(class_node)

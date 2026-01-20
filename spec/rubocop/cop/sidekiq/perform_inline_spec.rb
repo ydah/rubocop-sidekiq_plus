@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::PerformInline do
-  subject(:cop) { described_class.new(config) }
-
+RSpec.describe RuboCop::Cop::Sidekiq::PerformInline, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
 
   context 'when AllowedInTests is true (default)' do
@@ -10,7 +8,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformInline do
       { 'Sidekiq/PerformInline' => { 'AllowedInTests' => true } }
     end
 
-    context 'in production code' do
+    context 'when in production code' do
       before do
         allow(cop).to receive(:processed_source).and_return(
           instance_double(RuboCop::ProcessedSource, file_path: 'app/services/user_service.rb')
@@ -25,7 +23,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformInline do
       end
     end
 
-    context 'in spec file' do
+    context 'when in spec file' do
       before do
         allow(cop).to receive(:processed_source).and_return(
           instance_double(RuboCop::ProcessedSource, file_path: 'spec/jobs/my_job_spec.rb')
@@ -39,7 +37,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformInline do
       end
     end
 
-    context 'in test file' do
+    context 'when in test file' do
       before do
         allow(cop).to receive(:processed_source).and_return(
           instance_double(RuboCop::ProcessedSource, file_path: 'test/jobs/my_job_test.rb')
@@ -59,7 +57,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformInline do
       { 'Sidekiq/PerformInline' => { 'AllowedInTests' => false } }
     end
 
-    context 'in spec file' do
+    context 'when in spec file' do
       before do
         allow(cop).to receive(:processed_source).and_return(
           instance_double(RuboCop::ProcessedSource, file_path: 'spec/jobs/my_job_spec.rb')

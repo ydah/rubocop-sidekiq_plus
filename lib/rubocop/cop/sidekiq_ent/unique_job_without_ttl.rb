@@ -24,6 +24,7 @@ module RuboCop
       class UniqueJobWithoutTTL < Base
         MSG = 'Specify `unique_for` option when using unique jobs.'
 
+        # @!method sidekiq_options_with_unique?(node)
         def_node_matcher :sidekiq_options_with_unique?, <<~PATTERN
           (send nil? :sidekiq_options (hash $...))
         PATTERN
@@ -36,6 +37,7 @@ module RuboCop
             add_offense(node) if has_unique_until && !has_unique_for
           end
         end
+        alias on_csend on_send
 
         private
 

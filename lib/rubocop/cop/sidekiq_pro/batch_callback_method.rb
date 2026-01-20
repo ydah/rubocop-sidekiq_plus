@@ -50,7 +50,7 @@ module RuboCop
         private
 
         def potential_callback_method?(node)
-          CALLBACK_METHODS.keys.include?(node.method_name) && callback_like_signature?(node)
+          CALLBACK_METHODS.key?(node.method_name) && callback_like_signature?(node)
         end
 
         def callback_like_signature?(node)

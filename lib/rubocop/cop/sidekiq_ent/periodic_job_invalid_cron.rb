@@ -27,6 +27,7 @@ module RuboCop
       class PeriodicJobInvalidCron < Base
         MSG = 'Invalid cron expression: %<reason>s'
 
+        # @!method periodic_register?(node)
         def_node_matcher :periodic_register?, <<~PATTERN
           (send _ :register (str $_) ...)
         PATTERN
@@ -37,6 +38,7 @@ module RuboCop
             add_offense(node.first_argument, message: format(MSG, reason: error)) if error
           end
         end
+        alias on_csend on_send
 
         private
 

@@ -1,27 +1,25 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::DateTimeArgument do
-  subject(:cop) { described_class.new }
-
+RSpec.describe RuboCop::Cop::Sidekiq::DateTimeArgument, :config do
   context 'with Time objects' do
     it 'registers an offense for Time.now' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(Time.now)
-                            ^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                            ^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
 
     it 'registers an offense for Time.current' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(Time.current)
-                            ^^^^^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                            ^^^^^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
 
     it 'registers an offense for Time.zone' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(Time.zone)
-                            ^^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                            ^^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
   end
@@ -30,21 +28,21 @@ RSpec.describe RuboCop::Cop::Sidekiq::DateTimeArgument do
     it 'registers an offense for Date.today' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(Date.today)
-                            ^^^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                            ^^^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
 
     it 'registers an offense for Date.yesterday' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(Date.yesterday)
-                            ^^^^^^^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                            ^^^^^^^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
 
     it 'registers an offense for Date.tomorrow' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(Date.tomorrow)
-                            ^^^^^^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                            ^^^^^^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
   end
@@ -53,14 +51,14 @@ RSpec.describe RuboCop::Cop::Sidekiq::DateTimeArgument do
     it 'registers an offense for DateTime.now' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(DateTime.now)
-                            ^^^^^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                            ^^^^^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
 
     it 'registers an offense for DateTime.current' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(DateTime.current)
-                            ^^^^^^^^^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                            ^^^^^^^^^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
   end
@@ -69,7 +67,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::DateTimeArgument do
     it 'registers an offense' do
       expect_offense(<<~RUBY)
         MyJob.perform_in(1.hour, Time.now)
-                                 ^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                                 ^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
   end
@@ -78,7 +76,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::DateTimeArgument do
     it 'registers an offense for date/time values in hash' do
       expect_offense(<<~RUBY)
         MyJob.perform_async(created_at: Time.now)
-                                        ^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                                        ^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
   end
@@ -87,8 +85,8 @@ RSpec.describe RuboCop::Cop::Sidekiq::DateTimeArgument do
     it 'registers an offense for date/time values in array' do
       expect_offense(<<~RUBY)
         MyJob.perform_async([Time.now, Date.today])
-                             ^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
-                                       ^^^^^^^^^^ Sidekiq/DateTimeArgument: Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                             ^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
+                                       ^^^^^^^^^^ Do not pass Date/Time objects to Sidekiq jobs. Convert to a string or timestamp first.
       RUBY
     end
   end

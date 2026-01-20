@@ -27,6 +27,7 @@ module RuboCop
 
         RESTRICT_ON_SEND = PerformMethods.all
 
+        # @!method sidekiq_perform_call?(node)
         def_node_matcher :sidekiq_perform_call?, <<~PATTERN
           (send _ {#{RESTRICT_ON_SEND.map(&:inspect).join(' ')}} $...)
         PATTERN
@@ -36,6 +37,7 @@ module RuboCop
             check_arguments(args)
           end
         end
+        alias on_csend on_send
 
         private
 

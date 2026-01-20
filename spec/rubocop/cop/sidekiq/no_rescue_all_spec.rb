@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll do
-  subject(:cop) { described_class.new }
-
-  context 'in a Sidekiq job' do
+RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll, :config do
+  context 'when in a Sidekiq job' do
     it 'registers an offense for bare rescue' do
       expect_offense(<<~RUBY)
         class MyJob
@@ -12,7 +10,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll do
           def perform
             do_work
           rescue
-          ^^^^^^ Sidekiq/NoRescueAll: Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
+          ^^^^^^ Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
             log_error
           end
         end
@@ -27,7 +25,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll do
           def perform
             do_work
           rescue Exception
-          ^^^^^^^^^^^^^^^^ Sidekiq/NoRescueAll: Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
+          ^^^^^^^^^^^^^^^^ Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
             log_error
           end
         end
@@ -42,7 +40,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll do
           def perform
             do_work
           rescue ::Exception
-          ^^^^^^^^^^^^^^^^^^ Sidekiq/NoRescueAll: Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
+          ^^^^^^^^^^^^^^^^^^ Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
             log_error
           end
         end
@@ -58,7 +56,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll do
             begin
               do_work
             rescue
-            ^^^^^^ Sidekiq/NoRescueAll: Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
+            ^^^^^^ Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
               nil
             end
           end
@@ -97,7 +95,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll do
     end
   end
 
-  context 'in a Sidekiq::Worker class' do
+  context 'when in a Sidekiq::Worker class' do
     it 'registers an offense' do
       expect_offense(<<~RUBY)
         class MyJob
@@ -106,7 +104,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll do
           def perform
             do_work
           rescue
-          ^^^^^^ Sidekiq/NoRescueAll: Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
+          ^^^^^^ Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
             log_error
           end
         end
@@ -114,7 +112,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::NoRescueAll do
     end
   end
 
-  context 'outside a Sidekiq job' do
+  context 'when outside a Sidekiq job' do
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
         class MyService

@@ -26,6 +26,7 @@ module RuboCop
         MSG = 'Do not use keyword arguments in the `perform` method. ' \
               'Sidekiq cannot serialize keyword arguments to JSON.'
 
+        # @!method perform_method?(node)
         def_node_matcher :perform_method?, <<~PATTERN
           (def :perform ...)
         PATTERN
@@ -44,7 +45,7 @@ module RuboCop
         private
 
         def keyword_argument?(arg)
-          arg.kwarg_type? || arg.kwoptarg_type? || arg.kwrestarg_type?
+          arg.type?(:kwarg, :kwoptarg, :kwrestarg)
         end
       end
     end

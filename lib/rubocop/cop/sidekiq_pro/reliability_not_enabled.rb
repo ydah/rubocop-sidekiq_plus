@@ -25,6 +25,7 @@ module RuboCop
         MSG_SUPER_FETCH = 'Consider enabling `super_fetch!` for reliable job fetching.'
         MSG_RELIABLE_PUSH = 'Consider enabling `reliable_push!` for reliable job pushing.'
 
+        # @!method configure_server_block?(node)
         def_node_matcher :configure_server_block?, <<~PATTERN
           (block
             (send (const {nil? cbase} :Sidekiq) :configure_server)
@@ -40,6 +41,7 @@ module RuboCop
             check_reliability_features(node, config_var, body)
           end
         end
+        alias on_numblock on_block
 
         private
 
@@ -54,7 +56,7 @@ module RuboCop
         def method_call?(body, config_var, method_name)
           nodes_to_check = body.send_type? ? [body] : body.each_descendant(:send).to_a
           nodes_to_check.any? do |send_node|
-            send_node.method_name == method_name &&
+            send_node.method?(method_name) &&
               send_node.receiver&.lvar_type? &&
               send_node.receiver.children.first == config_var
           end

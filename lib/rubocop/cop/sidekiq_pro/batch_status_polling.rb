@@ -26,10 +26,12 @@ module RuboCop
       class BatchStatusPolling < Base
         MSG = 'Avoid polling batch status. Use batch callbacks instead.'
 
+        # @!method batch_status_new?(node)
         def_node_matcher :batch_status_new?, <<~PATTERN
           (send (const (const (const {nil? cbase} :Sidekiq) :Batch) :Status) :new ...)
         PATTERN
 
+        # @!method status_complete_check?(node)
         def_node_matcher :status_complete_check?, <<~PATTERN
           (send _ {:complete? :pending :failures :total} ...)
         PATTERN
@@ -40,6 +42,7 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
 
         private
 
@@ -50,7 +53,7 @@ module RuboCop
         end
 
         def loop_node?(node)
-          return true if node.while_type? || node.until_type?
+          return true if node.type?(:while, :until)
           return true if node.block_type? && loop_method?(node.send_node)
 
           false

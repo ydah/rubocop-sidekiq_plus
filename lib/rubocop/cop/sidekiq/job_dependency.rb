@@ -15,7 +15,7 @@ module RuboCop
         MSG = 'Avoid implicit job dependencies. Use Sidekiq Batches instead.'
 
         def on_def(node)
-          return unless node.method_name == :perform
+          return unless node.method?(:perform)
           return unless in_sidekiq_job?(node)
 
           node.each_descendant(:send) do |send|

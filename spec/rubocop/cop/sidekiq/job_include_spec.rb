@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::JobInclude do
-  subject(:cop) { described_class.new(config) }
-
+RSpec.describe RuboCop::Cop::Sidekiq::JobInclude, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
 
   context 'when PreferredModule is Job (default)' do

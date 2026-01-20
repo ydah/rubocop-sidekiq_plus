@@ -26,6 +26,7 @@ module RuboCop
             check_arguments(node.arguments, allow_literal: true)
           end
         end
+        alias on_csend on_send
 
         private
 
@@ -39,7 +40,7 @@ module RuboCop
         end
 
         def literal_node?(arg)
-          arg.sym_type? || arg.str_type?
+          arg.type?(:sym, :str)
         end
 
         def var_node?(arg)
@@ -72,7 +73,7 @@ module RuboCop
 
         def check_hash_pair(pair)
           key = pair.key
-          add_offense(key) if key && (key.sym_type? || key.str_type?) && pii_name?(key.value.to_s)
+          add_offense(key) if key&.type?(:sym, :str) && pii_name?(key.value.to_s)
           check_argument(pair.value, allow_literal: false) if pair.value
         end
 

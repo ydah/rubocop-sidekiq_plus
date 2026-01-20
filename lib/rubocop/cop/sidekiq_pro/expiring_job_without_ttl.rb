@@ -36,6 +36,7 @@ module RuboCop
         MINIMUM_TTL = 300
         MAXIMUM_TTL = 604_800
 
+        # @!method expires_in_value(node)
         def_node_matcher :expires_in_value, <<~PATTERN
           (send nil? :sidekiq_options (hash <(pair (sym :expires_in) $_) ...>))
         PATTERN
@@ -48,6 +49,7 @@ module RuboCop
             check_ttl_range(value_node, ttl)
           end
         end
+        alias on_csend on_send
 
         private
 
@@ -79,7 +81,7 @@ module RuboCop
         end
 
         def extract_duration_seconds(node)
-          return unless node.receiver&.int_type? || node.receiver&.float_type?
+          return unless node.receiver&.type?(:int, :float)
 
           value = node.receiver.value.to_f
           duration_multiplier(node.method_name, value)&.to_i

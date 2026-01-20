@@ -27,6 +27,7 @@ module RuboCop
             end
           end
         end
+        alias on_csend on_send
 
         private
 
@@ -38,7 +39,7 @@ module RuboCop
 
         def large_pluck?(arg)
           return false unless arg.send_type?
-          return false unless arg.method_name == :pluck
+          return false unless arg.method?(:pluck)
 
           arg.arguments.size >= max_pluck_columns
         end

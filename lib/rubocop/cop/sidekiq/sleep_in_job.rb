@@ -28,6 +28,7 @@ module RuboCop
 
         RESTRICT_ON_SEND = %i[sleep].freeze
 
+        # @!method sleep_call?(node)
         def_node_matcher :sleep_call?, <<~PATTERN
           (send {nil? (const {nil? cbase} :Kernel)} :sleep ...)
         PATTERN
@@ -38,6 +39,7 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
       end
     end
   end
