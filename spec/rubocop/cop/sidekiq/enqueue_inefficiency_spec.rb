@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::InefficientEnqueue, :config do
+RSpec.describe RuboCop::Cop::Sidekiq::EnqueueInefficiency, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
-  let(:cop_config) { { 'Sidekiq/InefficientEnqueue' => {} } }
+  let(:cop_config) { { 'Sidekiq/EnqueueInefficiency' => {} } }
 
   it 'registers an offense for perform_async inside loops' do
     expect_offense(<<~RUBY)
@@ -23,7 +23,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::InefficientEnqueue, :config do
 
   context 'when MinimumIterations is configured' do
     let(:cop_config) do
-      { 'Sidekiq/InefficientEnqueue' => { 'AllowedMethods' => ['times'], 'MinimumIterations' => 5 } }
+      { 'Sidekiq/EnqueueInefficiency' => { 'AllowedMethods' => ['times'], 'MinimumIterations' => 5 } }
     end
 
     it 'does not register an offense when below the threshold' do

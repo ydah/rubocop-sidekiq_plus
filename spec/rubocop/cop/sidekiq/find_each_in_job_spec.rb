@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::AvoidFindEachInJob, :config do
+RSpec.describe RuboCop::Cop::Sidekiq::FindEachInJob, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
-  let(:cop_config) { { 'Sidekiq/AvoidFindEachInJob' => {} } }
+  let(:cop_config) { { 'Sidekiq/FindEachInJob' => {} } }
 
   it 'registers an offense for find_each inside perform in a Sidekiq job' do
     expect_offense(<<~RUBY)
@@ -28,7 +28,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::AvoidFindEachInJob, :config do
   end
 
   context 'when AllowedMethods includes find_each' do
-    let(:cop_config) { { 'Sidekiq/AvoidFindEachInJob' => { 'AllowedMethods' => ['find_each'] } } }
+    let(:cop_config) { { 'Sidekiq/FindEachInJob' => { 'AllowedMethods' => ['find_each'] } } }
 
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)

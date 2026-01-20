@@ -22,7 +22,7 @@ module RuboCop
       #   # good - use perform_in instead
       #   MyJob.perform_in(5.seconds, args)
       #
-      class SleepInJob < Base
+      class SleepInJobs < Base
         MSG = 'Do not use `sleep` in Sidekiq jobs. ' \
               'It blocks the worker thread. Use `perform_in` or `perform_at` instead.'
 

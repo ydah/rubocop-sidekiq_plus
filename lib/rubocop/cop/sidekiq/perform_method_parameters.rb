@@ -22,7 +22,7 @@ module RuboCop
       #   def perform(user_id, status)
       #   end
       #
-      class PerformMethodSignature < Base
+      class PerformMethodParameters < Base
         MSG = 'Do not use keyword arguments in the `perform` method. ' \
               'Sidekiq cannot serialize keyword arguments to JSON.'
 

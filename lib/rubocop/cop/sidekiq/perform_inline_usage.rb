@@ -20,7 +20,7 @@ module RuboCop
       #   # bad (in any file)
       #   MyJob.perform_inline(user.id)
       #
-      class PerformInline < Base
+      class PerformInlineUsage < Base
         MSG = 'Avoid using `perform_inline` in production code. ' \
               'Use `perform_async` instead.'
 

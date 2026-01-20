@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::UsingPutsOrPrint, :config do
+RSpec.describe RuboCop::Cop::Sidekiq::PutsOrPrintUsage, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
-  let(:cop_config) { { 'Sidekiq/UsingPutsOrPrint' => {} } }
+  let(:cop_config) { { 'Sidekiq/PutsOrPrintUsage' => {} } }
 
   it 'registers an offense for puts in perform' do
     expect_offense(<<~RUBY)

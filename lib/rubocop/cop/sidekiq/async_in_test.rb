@@ -12,7 +12,7 @@ module RuboCop
       #   # good
       #   MyJob.perform_inline(user.id)
       #
-      class PerformAsyncInTest < Base
+      class AsyncInTest < Base
         MSG = 'Avoid perform_async in tests. Use perform_inline or call perform directly.'
 
         RESTRICT_ON_SEND = %i[perform_async].freeze

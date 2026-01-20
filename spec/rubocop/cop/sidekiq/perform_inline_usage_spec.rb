@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::PerformInline, :config do
+RSpec.describe RuboCop::Cop::Sidekiq::PerformInlineUsage, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
 
   context 'when AllowedInTests is true (default)' do
     let(:cop_config) do
-      { 'Sidekiq/PerformInline' => { 'AllowedInTests' => true } }
+      { 'Sidekiq/PerformInlineUsage' => { 'AllowedInTests' => true } }
     end
 
     context 'when in production code' do
@@ -54,7 +54,7 @@ RSpec.describe RuboCop::Cop::Sidekiq::PerformInline, :config do
 
   context 'when AllowedInTests is false' do
     let(:cop_config) do
-      { 'Sidekiq/PerformInline' => { 'AllowedInTests' => false } }
+      { 'Sidekiq/PerformInlineUsage' => { 'AllowedInTests' => false } }
     end
 
     context 'when in spec file' do

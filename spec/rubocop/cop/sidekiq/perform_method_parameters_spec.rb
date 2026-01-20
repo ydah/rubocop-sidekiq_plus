@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::PerformMethodSignature, :config do
+RSpec.describe RuboCop::Cop::Sidekiq::PerformMethodParameters, :config do
   context 'when in a Sidekiq job class' do
     it 'registers an offense for required keyword arguments' do
       expect_offense(<<~RUBY)

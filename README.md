@@ -34,7 +34,7 @@ plugins:
 
 Do not pass ActiveRecord objects to Sidekiq jobs. Pass the id and fetch the record in the job instead.
 
-### Sidekiq/AvoidFindEachInJob
+### Sidekiq/FindEachInJob
 
 Do not process large datasets within a single Sidekiq job. Split work into smaller jobs instead.
 
@@ -74,7 +74,7 @@ Detect excessive retry counts in `sidekiq_options`.
 
 Avoid passing large arguments to Sidekiq jobs. Pass IDs and load records in the job instead.
 
-### Sidekiq/InefficientEnqueue
+### Sidekiq/EnqueueInefficiency
 
 Avoid calling `perform_async` inside loops. Use `perform_bulk` instead.
 
@@ -110,15 +110,15 @@ Avoid mixing ActiveJob `retry_on` with Sidekiq retry options.
 
 Avoid rescuing all exceptions in Sidekiq jobs. Rescue specific exceptions and consider re-raising.
 
-### Sidekiq/PerformAsyncInTest
+### Sidekiq/AsyncInTest
 
 Avoid `perform_async` in tests. Disabled by default.
 
-### Sidekiq/PerformInline
+### Sidekiq/PerformInlineUsage
 
 Avoid using `perform_inline` in production code. Use `perform_async` instead.
 
-### Sidekiq/PerformMethodSignature
+### Sidekiq/PerformMethodParameters
 
 Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize keyword arguments to JSON.
 
@@ -126,7 +126,7 @@ Do not use keyword arguments in the `perform` method. Sidekiq cannot serialize k
 
 Avoid passing PII in job arguments. Disabled by default.
 
-### Sidekiq/PreferSidekiqOverActiveJob
+### Sidekiq/SidekiqOverActiveJob
 
 Prefer Sidekiq::Job over ActiveJob. Disabled by default.
 
@@ -158,7 +158,7 @@ Avoid passing sensitive data in job arguments.
 
 Avoid silently swallowing exceptions in jobs.
 
-### Sidekiq/SleepInJob
+### Sidekiq/SleepInJobs
 
 Do not use `sleep` in Sidekiq jobs. It blocks the worker thread.
 
@@ -178,7 +178,7 @@ Do not enqueue Sidekiq jobs inside database transactions. The job may run before
 
 Detect unknown or unsupported keys in `sidekiq_options`.
 
-### Sidekiq/UsingPutsOrPrint
+### Sidekiq/PutsOrPrintUsage
 
 Use `logger` instead of `puts`/`print` in jobs.
 
@@ -281,9 +281,9 @@ All cops are enabled by default except for:
 - `Sidekiq/JobFileLocation`
 - `Sidekiq/JobFileNaming`
 - `Sidekiq/MissingLogging`
-- `Sidekiq/PerformAsyncInTest`
+- `Sidekiq/AsyncInTest`
 - `Sidekiq/PiiInArguments`
-- `Sidekiq/PreferSidekiqOverActiveJob`
+- `Sidekiq/SidekiqOverActiveJob`
 - `Sidekiq/RetryZero`
 - `Sidekiq/SelfSchedulingJob`
 - `SidekiqPro/BatchStatusPolling`
@@ -299,7 +299,7 @@ Example configuration:
 Sidekiq/JobInclude:
   PreferredModule: Job  # or Worker
 
-Sidekiq/PerformInline:
+Sidekiq/PerformInlineUsage:
   AllowedInTests: true
 
 Sidekiq/QueueSpecified:

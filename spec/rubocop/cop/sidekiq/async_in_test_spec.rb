@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::PerformAsyncInTest, :config do
+RSpec.describe RuboCop::Cop::Sidekiq::AsyncInTest, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
-  let(:cop_config) { { 'Sidekiq/PerformAsyncInTest' => {} } }
+  let(:cop_config) { { 'Sidekiq/AsyncInTest' => {} } }
 
   it 'registers an offense for perform_async in spec files' do
     allow(cop).to receive(:processed_source).and_return(

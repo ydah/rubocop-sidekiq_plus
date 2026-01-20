@@ -25,7 +25,7 @@ module RuboCop
       #     end
       #   end
       #
-      class AvoidFindEachInJob < Base
+      class FindEachInJob < Base
         MSG = 'Avoid processing large datasets in a single Sidekiq job. Split into smaller jobs instead.'
 
         DEFAULT_ALLOWED_METHODS = [].freeze

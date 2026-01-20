@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::PreferSidekiqOverActiveJob, :config do
+RSpec.describe RuboCop::Cop::Sidekiq::SidekiqOverActiveJob, :config do
   let(:config) { RuboCop::Config.new(cop_config) }
-  let(:cop_config) { { 'Sidekiq/PreferSidekiqOverActiveJob' => {} } }
+  let(:cop_config) { { 'Sidekiq/SidekiqOverActiveJob' => {} } }
 
   it 'registers an offense for ApplicationJob subclasses' do
     expect_offense(<<~RUBY)

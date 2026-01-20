@@ -16,7 +16,7 @@ module RuboCop
       #     include Sidekiq::Job
       #   end
       #
-      class PreferSidekiqOverActiveJob < Base
+      class SidekiqOverActiveJob < Base
         MSG = 'Prefer Sidekiq::Job over ActiveJob for Sidekiq-specific features.'
 
         def on_class(node)

@@ -9,18 +9,33 @@ Sidekiq/ActiveRecordArgument:
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ActiveRecordArgument
 
-Sidekiq/AvoidFindEachInJob:
-  Description: Avoid processing large datasets inside a single Sidekiq job.
-  Enabled: true
+Sidekiq/AsyncInTest:
+  Description: Prefer perform_inline over perform_async in tests.
+  Enabled: false
   VersionAdded: '0.1'
-  AllowedMethods: []
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/AvoidFindEachInJob
+  Include:
+    - spec/**/*_spec.rb
+    - test/**/*_test.rb
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/AsyncInTest
+
+Sidekiq/ConsistentJobSuffix:
+  Description: Enforce consistent job class name suffix.
+  Enabled: false
+  VersionAdded: '0.1'
+  EnforcedSuffix: Job
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ConsistentJobSuffix
 
 Sidekiq/ConstantJobClassName:
   Description: Ensure job class names are constant.
   Enabled: true
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ConstantJobClassName
+
+Sidekiq/DatabaseConnectionLeak:
+  Description: Ensure database connections are properly released.
+  Enabled: true
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/DatabaseConnectionLeak
 
 Sidekiq/DateTimeArgument:
   Description: Do not pass Date/Time objects to Sidekiq jobs.
@@ -46,16 +61,7 @@ Sidekiq/DeprecatedWorkerModule:
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/DeprecatedWorkerModule
 
-Sidekiq/HugeJobArguments:
-  Description: Avoid passing potentially huge arguments to Sidekiq jobs.
-  Enabled: true
-  VersionAdded: '0.1'
-  MaxArraySize: 10
-  MaxHashSize: 10
-  MaxPluckColumns: 3
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/HugeJobArguments
-
-Sidekiq/InefficientEnqueue:
+Sidekiq/EnqueueInefficiency:
   Description: Prefer perform_bulk over perform_async inside loops.
   Enabled: true
   VersionAdded: '0.1'
@@ -64,88 +70,7 @@ Sidekiq/InefficientEnqueue:
     - find_each
     - find_in_batches
   MinimumIterations: ~
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/InefficientEnqueue
-
-Sidekiq/JobInclude:
-  Description: Prefer including Sidekiq::Job over Sidekiq::Worker.
-  Enabled: true
-  VersionAdded: '0.1'
-  PreferredModule: Job
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/JobInclude
-
-Sidekiq/NoRescueAll:
-  Description: Avoid rescuing all exceptions in Sidekiq jobs.
-  Enabled: true
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/NoRescueAll
-
-Sidekiq/PerformInline:
-  Description: Avoid using perform_inline in production code.
-  Enabled: true
-  VersionAdded: '0.1'
-  AllowedInTests: true
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformInline
-
-Sidekiq/PerformMethodSignature:
-  Description: Do not use keyword arguments in perform method.
-  Enabled: true
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformMethodSignature
-
-Sidekiq/QueueSpecified:
-  Description: Require explicit queue specification for jobs.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/QueueSpecified
-
-Sidekiq/RetrySpecified:
-  Description: Require explicit retry configuration for jobs.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/RetrySpecified
-
-Sidekiq/SleepInJob:
-  Description: Do not use sleep in Sidekiq jobs.
-  Enabled: true
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SleepInJob
-
-Sidekiq/SymbolArgument:
-  Description: Do not pass symbols to Sidekiq jobs.
-  Enabled: true
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SymbolArgument
-
-Sidekiq/ThreadInJob:
-  Description: Do not create threads inside Sidekiq jobs.
-  Enabled: true
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ThreadInJob
-
-Sidekiq/TransactionLeak:
-  Description: Do not enqueue jobs inside database transactions.
-  Enabled: true
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/TransactionLeak
-
-Sidekiq/UnknownSidekiqOption:
-  Description: Check sidekiq_options for unknown or unsupported keys.
-  Enabled: true
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UnknownSidekiqOption
-
-Sidekiq/ConsistentJobSuffix:
-  Description: Enforce consistent job class name suffix.
-  Enabled: false
-  VersionAdded: '0.1'
-  EnforcedSuffix: Job
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ConsistentJobSuffix
-
-Sidekiq/DatabaseConnectionLeak:
-  Description: Ensure database connections are properly released.
-  Enabled: true
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/DatabaseConnectionLeak
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/EnqueueInefficiency
 
 Sidekiq/ExcessiveRetry:
   Description: Detect excessive retry counts.
@@ -153,6 +78,22 @@ Sidekiq/ExcessiveRetry:
   VersionAdded: '0.1'
   MaxRetries: 25
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ExcessiveRetry
+
+Sidekiq/FindEachInJob:
+  Description: Avoid processing large datasets inside a single Sidekiq job.
+  Enabled: true
+  VersionAdded: '0.1'
+  AllowedMethods: []
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/FindEachInJob
+
+Sidekiq/HugeJobArguments:
+  Description: Avoid passing potentially huge arguments to Sidekiq jobs.
+  Enabled: true
+  VersionAdded: '0.1'
+  MaxArraySize: 10
+  MaxHashSize: 10
+  MaxPluckColumns: 3
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/HugeJobArguments
 
 Sidekiq/JobDependency:
   Description: Detect implicit job dependencies, suggest Batches.
@@ -175,6 +116,13 @@ Sidekiq/JobFileNaming:
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/JobFileNaming
 
+Sidekiq/JobInclude:
+  Description: Prefer including Sidekiq::Job over Sidekiq::Worker.
+  Enabled: true
+  VersionAdded: '0.1'
+  PreferredModule: Job
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/JobInclude
+
 Sidekiq/MissingLogging:
   Description: Encourage logging in jobs.
   Enabled: false
@@ -193,14 +141,24 @@ Sidekiq/MixedRetryStrategies:
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/MixedRetryStrategies
 
-Sidekiq/PerformAsyncInTest:
-  Description: Prefer perform_inline over perform_async in tests.
-  Enabled: false
+Sidekiq/NoRescueAll:
+  Description: Avoid rescuing all exceptions in Sidekiq jobs.
+  Enabled: true
   VersionAdded: '0.1'
-  Include:
-    - spec/**/*_spec.rb
-    - test/**/*_test.rb
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformAsyncInTest
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/NoRescueAll
+
+Sidekiq/PerformInlineUsage:
+  Description: Avoid using perform_inline in production code.
+  Enabled: true
+  VersionAdded: '0.1'
+  AllowedInTests: true
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformInlineUsage
+
+Sidekiq/PerformMethodParameters:
+  Description: Do not use keyword arguments in perform method.
+  Enabled: true
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformMethodParameters
 
 Sidekiq/PiiInArguments:
   Description: Avoid passing PII in job arguments.
@@ -212,17 +170,29 @@ Sidekiq/PiiInArguments:
     - address
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PiiInArguments
 
-Sidekiq/PreferSidekiqOverActiveJob:
-  Description: Recommend using Sidekiq directly instead of ActiveJob.
+Sidekiq/PutsOrPrintUsage:
+  Description: Use logger instead of puts/print in jobs.
+  Enabled: true
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PutsOrPrintUsage
+
+Sidekiq/QueueSpecified:
+  Description: Require explicit queue specification for jobs.
   Enabled: false
   VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PreferSidekiqOverActiveJob
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/QueueSpecified
 
 Sidekiq/RedisInJob:
   Description: Use Sidekiq.redis instead of creating new Redis connections.
   Enabled: true
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/RedisInJob
+
+Sidekiq/RetrySpecified:
+  Description: Require explicit retry configuration for jobs.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/RetrySpecified
 
 Sidekiq/RetryZero:
   Description: 'Prefer retry: false over retry: 0 for clarity.'
@@ -253,6 +223,12 @@ Sidekiq/SensitiveDataInArguments:
     - ssn
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SensitiveDataInArguments
 
+Sidekiq/SidekiqOverActiveJob:
+  Description: Recommend using Sidekiq directly instead of ActiveJob.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SidekiqOverActiveJob
+
 Sidekiq/SilentRescue:
   Description: Avoid silently swallowing exceptions in jobs.
   Enabled: true
@@ -261,11 +237,35 @@ Sidekiq/SilentRescue:
     - ActiveRecord::RecordNotFound
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SilentRescue
 
-Sidekiq/UsingPutsOrPrint:
-  Description: Use logger instead of puts/print in jobs.
+Sidekiq/SleepInJobs:
+  Description: Do not use sleep in Sidekiq jobs.
   Enabled: true
   VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UsingPutsOrPrint
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SleepInJobs
+
+Sidekiq/SymbolArgument:
+  Description: Do not pass symbols to Sidekiq jobs.
+  Enabled: true
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SymbolArgument
+
+Sidekiq/ThreadInJob:
+  Description: Do not create threads inside Sidekiq jobs.
+  Enabled: true
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ThreadInJob
+
+Sidekiq/TransactionLeak:
+  Description: Do not enqueue jobs inside database transactions.
+  Enabled: true
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/TransactionLeak
+
+Sidekiq/UnknownSidekiqOption:
+  Description: Check sidekiq_options for unknown or unsupported keys.
+  Enabled: true
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UnknownSidekiqOption
 
 SidekiqPro:
   Enabled: false
@@ -277,19 +277,11 @@ SidekiqPro/BatchCallbackMethod:
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchCallbackMethod
 
-SidekiqPro/EmptyBatch:
-  Description: Detect batch.jobs blocks that may be empty.
+SidekiqPro/BatchStatusPolling:
+  Description: Discourage polling batch status, prefer callbacks.
   Enabled: false
   VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/EmptyBatch
-
-SidekiqPro/LargeArgumentInBatch:
-  Description: Avoid passing large arguments to jobs within a batch.
-  Enabled: false
-  VersionAdded: '0.1'
-  MaxArraySize: 10
-  MaxHashSize: 10
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/LargeArgumentInBatch
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchStatusPolling
 
 SidekiqPro/BatchWithoutCallback:
   Description: Recommend registering callbacks for batches.
@@ -297,6 +289,12 @@ SidekiqPro/BatchWithoutCallback:
   VersionAdded: '0.1'
   Severity: warning
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchWithoutCallback
+
+SidekiqPro/EmptyBatch:
+  Description: Detect batch.jobs blocks that may be empty.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/EmptyBatch
 
 SidekiqPro/ExpiringJobWithoutTTL:
   Description: Validate TTL range for expiring jobs.
@@ -306,6 +304,14 @@ SidekiqPro/ExpiringJobWithoutTTL:
   MaximumTTL: 604800
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/ExpiringJobWithoutTTL
 
+SidekiqPro/LargeArgumentInBatch:
+  Description: Avoid passing large arguments to jobs within a batch.
+  Enabled: false
+  VersionAdded: '0.1'
+  MaxArraySize: 10
+  MaxHashSize: 10
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/LargeArgumentInBatch
+
 SidekiqPro/ReliabilityNotEnabled:
   Description: Recommend enabling super_fetch and reliable_push.
   Enabled: false
@@ -314,66 +320,9 @@ SidekiqPro/ReliabilityNotEnabled:
     - config/initializers/sidekiq.rb
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/ReliabilityNotEnabled
 
-SidekiqPro/BatchStatusPolling:
-  Description: Discourage polling batch status, prefer callbacks.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchStatusPolling
-
 SidekiqEnt:
   Enabled: false
   DocumentationBaseURL: https://github.com/ydah/rubocop-sidekiq/blob/main/docs/modules/ROOT/pages
-
-SidekiqEnt/LimiterNotReused:
-  Description: Create rate limiters as class constants for reuse.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterNotReused
-
-SidekiqEnt/LimiterWithoutWaitTimeout:
-  Description: Specify wait_timeout option for rate limiters.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterWithoutWaitTimeout
-
-SidekiqEnt/UniqueJobWithoutTTL:
-  Description: Require unique_for when using unique_until option.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueJobWithoutTTL
-
-SidekiqEnt/UniqueJobTooShortTTL:
-  Description: Warn about unique jobs with too short TTL.
-  Enabled: false
-  VersionAdded: '0.1'
-  MinimumTTL: 60
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueJobTooShortTTL
-
-SidekiqEnt/UniqueUntilMismatch:
-  Description: Validate unique_until option values.
-  Enabled: false
-  VersionAdded: '0.1'
-  AllowedValues:
-    - success
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueUntilMismatch
-
-SidekiqEnt/LimiterWithoutLockTimeout:
-  Description: Recommend setting lock_timeout for concurrent limiters.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterWithoutLockTimeout
-
-SidekiqEnt/PeriodicJobWithArguments:
-  Description: Periodic jobs should not require arguments.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/PeriodicJobWithArguments
-
-SidekiqEnt/PeriodicJobInvalidCron:
-  Description: Validate cron expressions for periodic jobs.
-  Enabled: false
-  VersionAdded: '0.1'
-  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/PeriodicJobInvalidCron
 
 SidekiqEnt/EncryptionWithManyArguments:
   Description: Ensure sensitive data is in the last argument for encryption.
@@ -394,3 +343,54 @@ SidekiqEnt/LeaderElectionWithoutBlock:
   Enabled: false
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LeaderElectionWithoutBlock
+
+SidekiqEnt/LimiterNotReused:
+  Description: Create rate limiters as class constants for reuse.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterNotReused
+
+SidekiqEnt/LimiterWithoutLockTimeout:
+  Description: Recommend setting lock_timeout for concurrent limiters.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterWithoutLockTimeout
+
+SidekiqEnt/LimiterWithoutWaitTimeout:
+  Description: Specify wait_timeout option for rate limiters.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterWithoutWaitTimeout
+
+SidekiqEnt/PeriodicJobInvalidCron:
+  Description: Validate cron expressions for periodic jobs.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/PeriodicJobInvalidCron
+
+SidekiqEnt/PeriodicJobWithArguments:
+  Description: Periodic jobs should not require arguments.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/PeriodicJobWithArguments
+
+SidekiqEnt/UniqueJobTooShortTTL:
+  Description: Warn about unique jobs with too short TTL.
+  Enabled: false
+  VersionAdded: '0.1'
+  MinimumTTL: 60
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueJobTooShortTTL
+
+SidekiqEnt/UniqueJobWithoutTTL:
+  Description: Require unique_for when using unique_until option.
+  Enabled: false
+  VersionAdded: '0.1'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueJobWithoutTTL
+
+SidekiqEnt/UniqueUntilMismatch:
+  Description: Validate unique_until option values.
+  Enabled: false
+  VersionAdded: '0.1'
+  AllowedValues:
+    - success
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueUntilMismatch

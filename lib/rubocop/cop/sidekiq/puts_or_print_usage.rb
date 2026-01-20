@@ -12,7 +12,7 @@ module RuboCop
       #   # good
       #   logger.info 'Processing...'
       #
-      class UsingPutsOrPrint < Base
+      class PutsOrPrintUsage < Base
         MSG = 'Use logger instead of puts/print in Sidekiq jobs.'
 
         RESTRICT_ON_SEND = %i[puts print].freeze

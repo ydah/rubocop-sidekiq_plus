@@ -48,61 +48,48 @@ MyJob.perform_async(user_id)
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ActiveRecordArgument
 
-[#sidekiqavoidfindeachinjob]
-== Sidekiq/AvoidFindEachInJob
+[#sidekiqasyncintest]
+== Sidekiq/AsyncInTest
 
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Enabled
+| Disabled
 | Yes
 | No
 | 0.1
 | -
 |===
 
-Checks for find_each/find_in_batches usage inside Sidekiq job perform methods.
+Checks for perform_async usage in test files.
 
-[#examples-sidekiqavoidfindeachinjob]
+[#examples-sidekiqasyncintest]
 === Examples
 
 [source,ruby]
 ----
 # bad
-class ProcessAllUsersJob
-  include Sidekiq::Job
-
-  def perform
-    User.find_each { |user| process(user) }
-  end
-end
+MyJob.perform_async(user.id)
 
 # good
-class ProcessUserJob
-  include Sidekiq::Job
-
-  def perform(user_id)
-    user = User.find(user_id)
-    process(user)
-  end
-end
+MyJob.perform_inline(user.id)
 ----
 
-[#configurable-attributes-sidekiqavoidfindeachinjob]
+[#configurable-attributes-sidekiqasyncintest]
 === Configurable attributes
 
 |===
 | Name | Default value | Configurable values
 
-| AllowedMethods
-| `[]`
+| Include
+| `+spec/**/*_spec.rb+`, `+test/**/*_test.rb+`
 | Array
 |===
 
-[#references-sidekiqavoidfindeachinjob]
+[#references-sidekiqasyncintest]
 === References
 
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/AvoidFindEachInJob
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/AsyncInTest
 
 [#sidekiqconsistentjobsuffix]
 == Sidekiq/ConsistentJobSuffix
@@ -364,6 +351,56 @@ end
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/DeprecatedWorkerModule
 
+[#sidekiqenqueueinefficiency]
+== Sidekiq/EnqueueInefficiency
+
+|===
+| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
+
+| Enabled
+| Yes
+| No
+| 0.1
+| -
+|===
+
+Checks for perform_async calls inside loops and recommends perform_bulk.
+
+[#examples-sidekiqenqueueinefficiency]
+=== Examples
+
+[source,ruby]
+----
+# bad
+users.each do |user|
+  NotifyJob.perform_async(user.id)
+end
+
+# good
+user_ids = users.map { |user| [user.id] }
+NotifyJob.perform_bulk(user_ids)
+----
+
+[#configurable-attributes-sidekiqenqueueinefficiency]
+=== Configurable attributes
+
+|===
+| Name | Default value | Configurable values
+
+| AllowedMethods
+| `each`, `find_each`, `find_in_batches`
+| Array
+
+| MinimumIterations
+| `<none>`
+| 
+|===
+
+[#references-sidekiqenqueueinefficiency]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/EnqueueInefficiency
+
 [#sidekiqexcessiveretry]
 == Sidekiq/ExcessiveRetry
 
@@ -406,6 +443,62 @@ sidekiq_options retry: 100
 === References
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/ExcessiveRetry
+
+[#sidekiqfindeachinjob]
+== Sidekiq/FindEachInJob
+
+|===
+| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
+
+| Enabled
+| Yes
+| No
+| 0.1
+| -
+|===
+
+Checks for find_each/find_in_batches usage inside Sidekiq job perform methods.
+
+[#examples-sidekiqfindeachinjob]
+=== Examples
+
+[source,ruby]
+----
+# bad
+class ProcessAllUsersJob
+  include Sidekiq::Job
+
+  def perform
+    User.find_each { |user| process(user) }
+  end
+end
+
+# good
+class ProcessUserJob
+  include Sidekiq::Job
+
+  def perform(user_id)
+    user = User.find(user_id)
+    process(user)
+  end
+end
+----
+
+[#configurable-attributes-sidekiqfindeachinjob]
+=== Configurable attributes
+
+|===
+| Name | Default value | Configurable values
+
+| AllowedMethods
+| `[]`
+| Array
+|===
+
+[#references-sidekiqfindeachinjob]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/FindEachInJob
 
 [#sidekiqhugejobarguments]
 == Sidekiq/HugeJobArguments
@@ -458,56 +551,6 @@ MyJob.perform_async(user_ids)
 === References
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/HugeJobArguments
-
-[#sidekiqinefficientenqueue]
-== Sidekiq/InefficientEnqueue
-
-|===
-| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
-
-| Enabled
-| Yes
-| No
-| 0.1
-| -
-|===
-
-Checks for perform_async calls inside loops and recommends perform_bulk.
-
-[#examples-sidekiqinefficientenqueue]
-=== Examples
-
-[source,ruby]
-----
-# bad
-users.each do |user|
-  NotifyJob.perform_async(user.id)
-end
-
-# good
-user_ids = users.map { |user| [user.id] }
-NotifyJob.perform_bulk(user_ids)
-----
-
-[#configurable-attributes-sidekiqinefficientenqueue]
-=== Configurable attributes
-
-|===
-| Name | Default value | Configurable values
-
-| AllowedMethods
-| `each`, `find_each`, `find_in_batches`
-| Array
-
-| MinimumIterations
-| `<none>`
-| 
-|===
-
-[#references-sidekiqinefficientenqueue]
-=== References
-
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/InefficientEnqueue
 
 [#sidekiqjobdependency]
 == Sidekiq/JobDependency
@@ -853,51 +896,8 @@ end
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/NoRescueAll
 
-[#sidekiqperformasyncintest]
-== Sidekiq/PerformAsyncInTest
-
-|===
-| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
-
-| Disabled
-| Yes
-| No
-| 0.1
-| -
-|===
-
-Checks for perform_async usage in test files.
-
-[#examples-sidekiqperformasyncintest]
-=== Examples
-
-[source,ruby]
-----
-# bad
-MyJob.perform_async(user.id)
-
-# good
-MyJob.perform_inline(user.id)
-----
-
-[#configurable-attributes-sidekiqperformasyncintest]
-=== Configurable attributes
-
-|===
-| Name | Default value | Configurable values
-
-| Include
-| `+spec/**/*_spec.rb+`, `+test/**/*_test.rb+`
-| Array
-|===
-
-[#references-sidekiqperformasyncintest]
-=== References
-
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformAsyncInTest
-
-[#sidekiqperforminline]
-== Sidekiq/PerformInline
+[#sidekiqperforminlineusage]
+== Sidekiq/PerformInlineUsage
 
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
@@ -915,10 +915,10 @@ Checks for usage of `perform_inline` in production code.
 job queue. This can be useful in tests but should generally be
 avoided in production code.
 
-[#examples-sidekiqperforminline]
+[#examples-sidekiqperforminlineusage]
 === Examples
 
-[#allowedintests_-true-_default_-sidekiqperforminline]
+[#allowedintests_-true-_default_-sidekiqperforminlineusage]
 ==== AllowedInTests: true (default)
 
 [source,ruby]
@@ -930,7 +930,7 @@ MyJob.perform_inline(user.id)
 MyJob.perform_inline(user.id)
 ----
 
-[#allowedintests_-false-sidekiqperforminline]
+[#allowedintests_-false-sidekiqperforminlineusage]
 ==== AllowedInTests: false
 
 [source,ruby]
@@ -939,7 +939,7 @@ MyJob.perform_inline(user.id)
 MyJob.perform_inline(user.id)
 ----
 
-[#configurable-attributes-sidekiqperforminline]
+[#configurable-attributes-sidekiqperforminlineusage]
 === Configurable attributes
 
 |===
@@ -950,13 +950,13 @@ MyJob.perform_inline(user.id)
 | Boolean
 |===
 
-[#references-sidekiqperforminline]
+[#references-sidekiqperforminlineusage]
 === References
 
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformInline
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformInlineUsage
 
-[#sidekiqperformmethodsignature]
-== Sidekiq/PerformMethodSignature
+[#sidekiqperformmethodparameters]
+== Sidekiq/PerformMethodParameters
 
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
@@ -974,7 +974,7 @@ Sidekiq serializes job arguments to JSON, which does not support
 Ruby keyword arguments. Using keyword arguments will cause errors
 or unexpected behavior.
 
-[#examples-sidekiqperformmethodsignature]
+[#examples-sidekiqperformmethodparameters]
 === Examples
 
 [source,ruby]
@@ -992,10 +992,10 @@ def perform(user_id, status)
 end
 ----
 
-[#references-sidekiqperformmethodsignature]
+[#references-sidekiqperformmethodparameters]
 === References
 
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformMethodSignature
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PerformMethodParameters
 
 [#sidekiqpiiinarguments]
 == Sidekiq/PiiInArguments
@@ -1040,41 +1040,37 @@ NotifyJob.perform_async(user_id)
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PiiInArguments
 
-[#sidekiqprefersidekiqoveractivejob]
-== Sidekiq/PreferSidekiqOverActiveJob
+[#sidekiqputsorprintusage]
+== Sidekiq/PutsOrPrintUsage
 
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
 
-| Disabled
+| Enabled
 | Yes
 | No
 | 0.1
 | -
 |===
 
-Recommends using Sidekiq::Job over ActiveJob.
+Checks for puts/print usage inside Sidekiq jobs.
 
-[#examples-sidekiqprefersidekiqoveractivejob]
+[#examples-sidekiqputsorprintusage]
 === Examples
 
 [source,ruby]
 ----
 # bad
-class MyJob < ApplicationJob
-  def perform; end
-end
+puts 'Processing...'
 
 # good
-class MyJob
-  include Sidekiq::Job
-end
+logger.info 'Processing...'
 ----
 
-[#references-sidekiqprefersidekiqoveractivejob]
+[#references-sidekiqputsorprintusage]
 === References
 
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PreferSidekiqOverActiveJob
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/PutsOrPrintUsage
 
 [#sidekiqqueuespecified]
 == Sidekiq/QueueSpecified
@@ -1301,6 +1297,42 @@ UserJob.perform_async(user_id)
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SensitiveDataInArguments
 
+[#sidekiqsidekiqoveractivejob]
+== Sidekiq/SidekiqOverActiveJob
+
+|===
+| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
+
+| Disabled
+| Yes
+| No
+| 0.1
+| -
+|===
+
+Recommends using Sidekiq::Job over ActiveJob.
+
+[#examples-sidekiqsidekiqoveractivejob]
+=== Examples
+
+[source,ruby]
+----
+# bad
+class MyJob < ApplicationJob
+  def perform; end
+end
+
+# good
+class MyJob
+  include Sidekiq::Job
+end
+----
+
+[#references-sidekiqsidekiqoveractivejob]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SidekiqOverActiveJob
+
 [#sidekiqsilentrescue]
 == Sidekiq/SilentRescue
 
@@ -1353,8 +1385,8 @@ end
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SilentRescue
 
-[#sidekiqsleepinjob]
-== Sidekiq/SleepInJob
+[#sidekiqsleepinjobs]
+== Sidekiq/SleepInJobs
 
 |===
 | Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
@@ -1372,7 +1404,7 @@ Using `sleep` in a Sidekiq job blocks the worker thread and prevents
 it from processing other jobs. Instead, use `perform_in` or
 `perform_at` to schedule the job for later.
 
-[#examples-sidekiqsleepinjob]
+[#examples-sidekiqsleepinjobs]
 === Examples
 
 [source,ruby]
@@ -1390,10 +1422,10 @@ end
 MyJob.perform_in(5.seconds, args)
 ----
 
-[#references-sidekiqsleepinjob]
+[#references-sidekiqsleepinjobs]
 === References
 
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SleepInJob
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/SleepInJobs
 
 [#sidekiqsymbolargument]
 == Sidekiq/SymbolArgument
@@ -1564,35 +1596,3 @@ sidekiq_options queue: :critical, retry: 5
 === References
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UnknownSidekiqOption
-
-[#sidekiqusingputsorprint]
-== Sidekiq/UsingPutsOrPrint
-
-|===
-| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
-
-| Enabled
-| Yes
-| No
-| 0.1
-| -
-|===
-
-Checks for puts/print usage inside Sidekiq jobs.
-
-[#examples-sidekiqusingputsorprint]
-=== Examples
-
-[source,ruby]
-----
-# bad
-puts 'Processing...'
-
-# good
-logger.info 'Processing...'
-----
-
-[#references-sidekiqusingputsorprint]
-=== References
-
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UsingPutsOrPrint

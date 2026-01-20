@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RuboCop::Cop::Sidekiq::SleepInJob, :config do
+RSpec.describe RuboCop::Cop::Sidekiq::SleepInJobs, :config do
   context 'when in a Sidekiq job' do
     it 'registers an offense for sleep' do
       expect_offense(<<~RUBY)
