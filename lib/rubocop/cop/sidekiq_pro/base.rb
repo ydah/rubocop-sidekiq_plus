@@ -3,9 +3,11 @@
 module RuboCop
   module Cop
     module SidekiqPro
+      # @abstract
       # Base class for Sidekiq Pro cops.
       # Provides common functionality for detecting Pro-specific patterns.
       class Base < ::RuboCop::Cop::Base
+        abstract! if respond_to?(:abstract!)
         include RuboCop::Sidekiq::Language
 
         # Detect Sidekiq::Batch.new

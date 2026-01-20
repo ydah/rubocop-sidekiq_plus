@@ -6,22 +6,6 @@
 
 = SidekiqPro
 
-[#sidekiqprobase]
-== SidekiqPro/Base
-
-|===
-| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
-
-| Enabled
-| Yes
-| No
-| -
-| -
-|===
-
-Base class for Sidekiq Pro cops.
-Provides common functionality for detecting Pro-specific patterns.
-
 [#sidekiqprobatchcallbackmethod]
 == SidekiqPro/BatchCallbackMethod
 
@@ -64,6 +48,11 @@ batch.on(:complete, MyCallback)
 # good - method specified as string
 batch.on(:complete, 'MyCallback#handle_complete')
 ----
+
+[#references-sidekiqprobatchcallbackmethod]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchCallbackMethod
 
 [#sidekiqprobatchretryincallback]
 == SidekiqPro/BatchRetryInCallback
@@ -145,6 +134,11 @@ batch.jobs do
 end
 ----
 
+[#references-sidekiqprobatchstatuspolling]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchStatusPolling
+
 [#sidekiqprobatchwithoutcallback]
 == SidekiqPro/BatchWithoutCallback
 
@@ -200,6 +194,11 @@ end
 | String
 |===
 
+[#references-sidekiqprobatchwithoutcallback]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchWithoutCallback
+
 [#sidekiqproemptybatch]
 == SidekiqPro/EmptyBatch
 
@@ -242,6 +241,11 @@ if active_items.any?
   end
 end
 ----
+
+[#references-sidekiqproemptybatch]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/EmptyBatch
 
 [#sidekiqproexpiringjobwithoutttl]
 == SidekiqPro/ExpiringJobWithoutTTL
@@ -300,6 +304,11 @@ end
 | Integer
 |===
 
+[#references-sidekiqproexpiringjobwithoutttl]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/ExpiringJobWithoutTTL
+
 [#sidekiqprolargeargumentinbatch]
 == SidekiqPro/LargeArgumentInBatch
 
@@ -353,6 +362,11 @@ end
 | `10`
 | Integer
 |===
+
+[#references-sidekiqprolargeargumentinbatch]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/LargeArgumentInBatch
 
 [#sidekiqpronestedbatchwithoutparent]
 == SidekiqPro/NestedBatchWithoutParent
@@ -453,3 +467,8 @@ end
 | `config/initializers/sidekiq.rb`
 | Array
 |===
+
+[#references-sidekiqproreliabilitynotenabled]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/ReliabilityNotEnabled

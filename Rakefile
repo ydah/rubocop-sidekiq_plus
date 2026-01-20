@@ -33,15 +33,24 @@ task :build_config do
   require 'rubocop/sidekiq/config_formatter'
   require 'rubocop/sidekiq/description_extractor'
 
-  glob = File.join('lib', 'rubocop', 'cop', 'sidekiq', '*.rb')
+  cop_paths = [
+    File.join('lib', 'rubocop', 'cop', 'sidekiq', '*.rb'),
+    File.join('lib', 'rubocop', 'cop', 'sidekiq_pro', '*.rb'),
+    File.join('lib', 'rubocop', 'cop', 'sidekiq_ent', '*.rb')
+  ].flat_map { |path| Dir[path] }
   # Due to YARD's sensitivity to file require order (as of 0.9.25),
-  # we have to prepend the list with our base cop, RuboCop::Cop::Sidekiq::Base.
+  # we have to prepend the list with our base cops.
   # Otherwise, cop's parent class for cops loaded before our base cop class
   # are detected as RuboCop::Cop::Base, and that complicates the detection
   # of their relation with RuboCop RSpec.
-  sidekiq_cop_path = File.join('lib', 'rubocop', 'cop', 'sidekiq', 'base.rb')
+  base_cop_paths = [
+    File.join('lib', 'rubocop', 'cop', 'sidekiq', 'base.rb'),
+    File.join('lib', 'rubocop', 'cop', 'sidekiq_pro', 'base.rb'),
+    File.join('lib', 'rubocop', 'cop', 'sidekiq_ent', 'base.rb')
+  ]
+  cop_paths -= base_cop_paths
   YARD::Tags::Library.define_tag('Cop Safety Information', :safety)
-  YARD.parse(Dir[glob].prepend(sidekiq_cop_path), [])
+  YARD.parse(base_cop_paths + cop_paths, [])
 
   descriptions =
     RuboCop::Sidekiq::DescriptionExtractor.new(YARD::Registry.all(:class)).to_h

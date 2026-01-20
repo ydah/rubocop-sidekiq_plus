@@ -104,26 +104,6 @@ end
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/AvoidFindEachInJob
 
-[#sidekiqbase]
-== Sidekiq/Base
-
-|===
-| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
-
-| Enabled
-| Yes
-| No
-| -
-| -
-|===
-
-Base class for Sidekiq cops.
-
-[#references-sidekiqbase]
-=== References
-
-* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/Base
-
 [#sidekiqconsistentjobsuffix]
 == Sidekiq/ConsistentJobSuffix
 

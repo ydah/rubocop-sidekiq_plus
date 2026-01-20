@@ -6,6 +6,7 @@ module RuboCop
       # @abstract
       # Base class for Sidekiq cops.
       class Base < ::RuboCop::Cop::Base
+        abstract! if respond_to?(:abstract!)
         include RuboCop::Sidekiq::Language
       end
     end

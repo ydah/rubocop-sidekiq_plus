@@ -9,6 +9,10 @@ require 'yard'
 class CopsDocumentationGenerator
   private
 
+  def cops_of_department(department)
+    cops.with_department(department).sort!.reject { |cop| cop.cop_name&.end_with?('/Base') }
+  end
+
   # Override to normalize Hash values to Ruby 3.4+ format
   def format_table_value(val)
     value = formatted_table_value(val)

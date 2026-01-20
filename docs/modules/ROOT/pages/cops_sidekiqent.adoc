@@ -6,22 +6,6 @@
 
 = SidekiqEnt
 
-[#sidekiqentbase]
-== SidekiqEnt/Base
-
-|===
-| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
-
-| Enabled
-| Yes
-| No
-| -
-| -
-|===
-
-Base class for Sidekiq Enterprise cops.
-Provides common functionality for detecting Enterprise-specific patterns.
-
 [#sidekiqentencryptionwithmanyarguments]
 == SidekiqEnt/EncryptionWithManyArguments
 
@@ -74,6 +58,11 @@ end
 | `2`
 | Integer
 |===
+
+[#references-sidekiqentencryptionwithmanyarguments]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/EncryptionWithManyArguments
 
 [#sidekiqentencryptionwithoutsecretbag]
 == SidekiqEnt/EncryptionWithoutSecretBag
@@ -129,6 +118,11 @@ end
 | String
 |===
 
+[#references-sidekiqentencryptionwithoutsecretbag]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/EncryptionWithoutSecretBag
+
 [#sidekiqentleaderelectionwithoutblock]
 == SidekiqEnt/LeaderElectionWithoutBlock
 
@@ -163,6 +157,11 @@ if Sidekiq.leader?
   LeaderOnlyJob.perform_async
 end
 ----
+
+[#references-sidekiqentleaderelectionwithoutblock]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LeaderElectionWithoutBlock
 
 [#sidekiqentlimiternotreused]
 == SidekiqEnt/LimiterNotReused
@@ -219,6 +218,11 @@ class MyJob
 end
 ----
 
+[#references-sidekiqentlimiternotreused]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterNotReused
+
 [#sidekiqentlimiterwithoutlocktimeout]
 == SidekiqEnt/LimiterWithoutLockTimeout
 
@@ -248,6 +252,11 @@ LIMITER = Sidekiq::Limiter.concurrent('erp', 50, wait_timeout: 0)
 # good - explicit lock_timeout
 LIMITER = Sidekiq::Limiter.concurrent('erp', 50, wait_timeout: 0, lock_timeout: 120)
 ----
+
+[#references-sidekiqentlimiterwithoutlocktimeout]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterWithoutLockTimeout
 
 [#sidekiqentlimiterwithoutwaittimeout]
 == SidekiqEnt/LimiterWithoutWaitTimeout
@@ -282,6 +291,11 @@ API_LIMITER = Sidekiq::Limiter.concurrent('api', 50, wait_timeout: 0)
 # good - wait_timeout with value
 API_LIMITER = Sidekiq::Limiter.concurrent('api', 50, wait_timeout: 5)
 ----
+
+[#references-sidekiqentlimiterwithoutwaittimeout]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterWithoutWaitTimeout
 
 [#sidekiqentperiodicjobinvalidcron]
 == SidekiqEnt/PeriodicJobInvalidCron
@@ -321,6 +335,11 @@ config.periodic do |mgr|
   mgr.register('0 * * * *', 'SomeJob')
 end
 ----
+
+[#references-sidekiqentperiodicjobinvalidcron]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/PeriodicJobInvalidCron
 
 [#sidekiqentperiodicjobwitharguments]
 == SidekiqEnt/PeriodicJobWithArguments
@@ -371,6 +390,11 @@ class HourlyReportJob
 end
 ----
 
+[#references-sidekiqentperiodicjobwitharguments]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/PeriodicJobWithArguments
+
 [#sidekiqentuniquejobtooshortttl]
 == SidekiqEnt/UniqueJobTooShortTTL
 
@@ -418,6 +442,11 @@ end
 | Integer
 |===
 
+[#references-sidekiqentuniquejobtooshortttl]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueJobTooShortTTL
+
 [#sidekiqentuniquejobwithoutttl]
 == SidekiqEnt/UniqueJobWithoutTTL
 
@@ -453,6 +482,11 @@ class MyJob
   sidekiq_options unique_for: 1.hour, unique_until: :start
 end
 ----
+
+[#references-sidekiqentuniquejobwithoutttl]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueJobWithoutTTL
 
 [#sidekiqentuniqueuntilmismatch]
 == SidekiqEnt/UniqueUntilMismatch
@@ -507,3 +541,8 @@ end
 | `success`
 | Array
 |===
+
+[#references-sidekiqentuniqueuntilmismatch]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueUntilMismatch

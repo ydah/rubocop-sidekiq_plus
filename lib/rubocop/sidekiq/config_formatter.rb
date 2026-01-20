@@ -6,7 +6,7 @@ module RuboCop
   module Sidekiq
     # Builds a YAML config file from two config hashes
     class ConfigFormatter
-      EXTENSION_ROOT_DEPARTMENT = %r{^(Sidekiq*/)}.freeze
+      EXTENSION_ROOT_DEPARTMENT = %r{^(Sidekiq(?:Pro|Ent)?/)}.freeze
       SUBDEPARTMENTS = %w[].freeze
       AMENDMENTS = [].freeze
       COP_DOC_BASE_URL = 'https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/'
@@ -19,6 +19,7 @@ module RuboCop
       def dump
         YAML.dump(unified_config)
             .gsub(EXTENSION_ROOT_DEPARTMENT, "\n\\1")
+            .gsub(/^(SidekiqPro:|SidekiqEnt:)/, "\n\\1")
             .gsub(/^(\s+)- /, '\1  - ')
             .gsub('"~"', '~')
         # .gsub(*AMENDMENTS, "\n\\0")

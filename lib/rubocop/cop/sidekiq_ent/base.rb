@@ -3,9 +3,11 @@
 module RuboCop
   module Cop
     module SidekiqEnt
+      # @abstract
       # Base class for Sidekiq Enterprise cops.
       # Provides common functionality for detecting Enterprise-specific patterns.
       class Base < ::RuboCop::Cop::Base
+        abstract! if respond_to?(:abstract!)
         include RuboCop::Sidekiq::Language
 
         # Detect Sidekiq::Limiter.concurrent/bucket/window/leaky

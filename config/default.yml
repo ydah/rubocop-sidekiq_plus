@@ -266,93 +266,131 @@ Sidekiq/UsingPutsOrPrint:
   Enabled: true
   VersionAdded: '0.3'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UsingPutsOrPrint
+
 SidekiqPro:
   Enabled: true
   DocumentationBaseURL: https://github.com/ydah/rubocop-sidekiq/blob/main/docs/modules/ROOT/pages
+
 SidekiqPro/BatchCallbackMethod:
   Description: Ensure batch callback methods are named correctly.
   Enabled: true
   VersionAdded: '0.4'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchCallbackMethod
+
 SidekiqPro/EmptyBatch:
   Description: Detect batch.jobs blocks that may be empty.
   Enabled: true
   VersionAdded: '0.4'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/EmptyBatch
+
 SidekiqPro/LargeArgumentInBatch:
   Description: Avoid passing large arguments to jobs within a batch.
   Enabled: true
   VersionAdded: '0.4'
   MaxArraySize: 10
   MaxHashSize: 10
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/LargeArgumentInBatch
+
 SidekiqPro/BatchWithoutCallback:
   Description: Recommend registering callbacks for batches.
   Enabled: false
   VersionAdded: '0.5'
   Severity: warning
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchWithoutCallback
+
 SidekiqPro/ExpiringJobWithoutTTL:
   Description: Validate TTL range for expiring jobs.
   Enabled: false
   VersionAdded: '0.5'
   MinimumTTL: 300
   MaximumTTL: 604800
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/ExpiringJobWithoutTTL
+
 SidekiqPro/ReliabilityNotEnabled:
   Description: Recommend enabling super_fetch and reliable_push.
   Enabled: false
   VersionAdded: '0.5'
   Include:
     - config/initializers/sidekiq.rb
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/ReliabilityNotEnabled
+
 SidekiqPro/BatchStatusPolling:
   Description: Discourage polling batch status, prefer callbacks.
   Enabled: false
   VersionAdded: '0.5'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/BatchStatusPolling
+
 SidekiqEnt:
   Enabled: true
   DocumentationBaseURL: https://github.com/ydah/rubocop-sidekiq/blob/main/docs/modules/ROOT/pages
+
 SidekiqEnt/LimiterNotReused:
   Description: Create rate limiters as class constants for reuse.
   Enabled: true
   VersionAdded: '0.4'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterNotReused
+
 SidekiqEnt/LimiterWithoutWaitTimeout:
   Description: Specify wait_timeout option for rate limiters.
   Enabled: true
   VersionAdded: '0.4'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterWithoutWaitTimeout
+
 SidekiqEnt/UniqueJobWithoutTTL:
   Description: Require unique_for when using unique_until option.
   Enabled: true
   VersionAdded: '0.4'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueJobWithoutTTL
+
 SidekiqEnt/UniqueJobTooShortTTL:
   Description: Warn about unique jobs with too short TTL.
   Enabled: true
   VersionAdded: '0.4'
   MinimumTTL: 60
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueJobTooShortTTL
+
 SidekiqEnt/UniqueUntilMismatch:
   Description: Validate unique_until option values.
   Enabled: true
   VersionAdded: '0.4'
   AllowedValues:
     - success
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/UniqueUntilMismatch
+
 SidekiqEnt/LimiterWithoutLockTimeout:
   Description: Recommend setting lock_timeout for concurrent limiters.
   Enabled: true
   VersionAdded: '0.4'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LimiterWithoutLockTimeout
+
 SidekiqEnt/PeriodicJobWithArguments:
   Description: Periodic jobs should not require arguments.
   Enabled: true
   VersionAdded: '0.4'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/PeriodicJobWithArguments
+
 SidekiqEnt/PeriodicJobInvalidCron:
   Description: Validate cron expressions for periodic jobs.
   Enabled: true
   VersionAdded: '0.4'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/PeriodicJobInvalidCron
+
 SidekiqEnt/EncryptionWithManyArguments:
   Description: Ensure sensitive data is in the last argument for encryption.
   Enabled: true
   VersionAdded: '0.4'
   MaxArguments: 2
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/EncryptionWithManyArguments
+
 SidekiqEnt/EncryptionWithoutSecretBag:
   Description: Recommend proper secret bag usage with encryption.
   Enabled: false
   VersionAdded: '0.5'
   Severity: info
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/EncryptionWithoutSecretBag
+
 SidekiqEnt/LeaderElectionWithoutBlock:
   Description: Warn about long-running operations in leader checks.
   Enabled: false
   VersionAdded: '0.5'
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqEnt/LeaderElectionWithoutBlock
