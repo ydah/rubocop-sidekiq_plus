@@ -269,3 +269,37 @@ SidekiqEnt/UniqueJobWithoutTTL:
   Description: 'Require unique_for when using unique_until option.'
   Enabled: true
   VersionAdded: '0.4'
+
+SidekiqEnt/UniqueJobTooShortTTL:
+  Description: 'Warn about unique jobs with too short TTL.'
+  Enabled: true
+  VersionAdded: '0.4'
+  MinimumTTL: 60
+
+SidekiqEnt/UniqueUntilMismatch:
+  Description: 'Validate unique_until option values.'
+  Enabled: true
+  VersionAdded: '0.4'
+  AllowedValues:
+    - success
+
+SidekiqEnt/LimiterWithoutLockTimeout:
+  Description: 'Recommend setting lock_timeout for concurrent limiters.'
+  Enabled: true
+  VersionAdded: '0.4'
+
+SidekiqEnt/PeriodicJobWithArguments:
+  Description: 'Periodic jobs should not require arguments.'
+  Enabled: true
+  VersionAdded: '0.4'
+
+SidekiqEnt/PeriodicJobInvalidCron:
+  Description: 'Validate cron expressions for periodic jobs.'
+  Enabled: true
+  VersionAdded: '0.4'
+
+SidekiqEnt/EncryptionWithManyArguments:
+  Description: 'Ensure sensitive data is in the last argument for encryption.'
+  Enabled: true
+  VersionAdded: '0.4'
+  MaxArguments: 2
