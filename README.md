@@ -27,14 +27,14 @@ Add the following to your `.rubocop.yml`:
 
 ```yaml
 plugins:
-  - rubocop-sidekiq_plus
+  - rubocop-sidekiq
 ```
 
 ### Legacy (RuboCop < 1.72)
 
 ```yaml
 require:
-  - rubocop-sidekiq_plus
+  - rubocop-sidekiq
 ```
 
 ## Available Cops
