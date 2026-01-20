@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'Code style checking for Sidekiq'
   spec.description = 'A RuboCop extension focused on enforcing Sidekiq best practices and coding conventions.'
-  spec.homepage = 'https://github.com/ydah/rubocop-sidekiq+'
+  spec.homepage = 'https://github.com/ydah/rubocop-sidekiq_plus'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 2.7.0'
 

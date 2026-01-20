@@ -21,7 +21,7 @@ NOTE: The plugin system is supported in RuboCop 1.72+. In earlier versions, use 
 ----
 # .rubocop.yml
 require:
-  - rubocop-sidekiq_plus
+  - rubocop-sidekiq
 ----
 
 == Sidekiq Pro and Enterprise cops
@@ -43,7 +43,7 @@ SidekiqEnt:
 
 [source,bash]
 ----
-$ rubocop --plugin rubocop-sidekiq_plus
+$ rubocop --plugin rubocop-sidekiq
 ----
 
 == Rake task
@@ -51,6 +51,6 @@ $ rubocop --plugin rubocop-sidekiq_plus
 [source,ruby]
 ----
 RuboCop::RakeTask.new do |task|
-  task.plugins << 'rubocop-sidekiq_plus'
+  task.plugins << 'rubocop-sidekiq'
 end
 ----
