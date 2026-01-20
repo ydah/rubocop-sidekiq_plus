@@ -17,7 +17,7 @@ Layout/LineLength:
 
 Naming/FileName:
   Exclude:
-    - lib/rubocop-sidekiq.rb
+    - lib/rubocop-sidekiq_plus.rb
 
 Metrics/BlockLength:
   Exclude:

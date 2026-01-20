@@ -7,9 +7,9 @@ module RuboCop
     class Plugin < LintRoller::Plugin
       def about
         LintRoller::About.new(
-          name: 'rubocop-sidekiq',
+          name: 'rubocop-sidekiq_plus',
           version: VERSION,
-          homepage: 'https://github.com/ydah/rubocop-sidekiq',
+          homepage: 'https://github.com/ydah/rubocop-sidekiq_plus',
           description: 'Code style checking for Sidekiq.'
         )
       end

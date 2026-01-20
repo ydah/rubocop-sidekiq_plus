@@ -2,7 +2,7 @@
 
 require 'rubocop'
 require 'rubocop/rspec/support'
-require 'rubocop-sidekiq'
+require 'rubocop-sidekiq_plus'
 
 RSpec.configure do |config|
   config.include RuboCop::RSpec::ExpectOffense

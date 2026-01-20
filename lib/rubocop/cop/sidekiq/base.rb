@@ -3,6 +3,7 @@
 module RuboCop
   module Cop
     module Sidekiq
+      # @abstract
       # Base class for Sidekiq cops.
       class Base < ::RuboCop::Cop::Base
         include RuboCop::Sidekiq::Language
