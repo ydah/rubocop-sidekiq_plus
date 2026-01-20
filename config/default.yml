@@ -250,6 +250,31 @@ SidekiqPro/LargeArgumentInBatch:
   MaxArraySize: 10
   MaxHashSize: 10
 
+SidekiqPro/BatchWithoutCallback:
+  Description: 'Recommend registering callbacks for batches.'
+  Enabled: false
+  VersionAdded: '0.5'
+  Severity: warning
+
+SidekiqPro/ExpiringJobWithoutTTL:
+  Description: 'Validate TTL range for expiring jobs.'
+  Enabled: false
+  VersionAdded: '0.5'
+  MinimumTTL: 300
+  MaximumTTL: 604800
+
+SidekiqPro/ReliabilityNotEnabled:
+  Description: 'Recommend enabling super_fetch and reliable_push.'
+  Enabled: false
+  VersionAdded: '0.5'
+  Include:
+    - 'config/initializers/sidekiq.rb'
+
+SidekiqPro/BatchStatusPolling:
+  Description: 'Discourage polling batch status, prefer callbacks.'
+  Enabled: false
+  VersionAdded: '0.5'
+
 # Sidekiq Enterprise Cops
 SidekiqEnt:
   Enabled: true
@@ -303,3 +328,14 @@ SidekiqEnt/EncryptionWithManyArguments:
   Enabled: true
   VersionAdded: '0.4'
   MaxArguments: 2
+
+SidekiqEnt/EncryptionWithoutSecretBag:
+  Description: 'Recommend proper secret bag usage with encryption.'
+  Enabled: false
+  VersionAdded: '0.5'
+  Severity: info
+
+SidekiqEnt/LeaderElectionWithoutBlock:
+  Description: 'Warn about long-running operations in leader checks.'
+  Enabled: false
+  VersionAdded: '0.5'
