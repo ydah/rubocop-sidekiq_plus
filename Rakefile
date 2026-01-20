@@ -26,7 +26,7 @@ desc 'Run RuboCop over this gem'
 RuboCop::RakeTask.new(:internal_investigation)
 
 desc 'Build config/default.yml'
-task :build_config do
+task :build_config do # rubocop:disable Metrics/BlockLength
   require 'yard'
 
   require 'rubocop-sidekiq_plus'
