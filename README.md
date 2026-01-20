@@ -1,7 +1,7 @@
 # RuboCop Sidekiq+
 
 [![Gem Version](https://badge.fury.io/rb/rubocop-sidekiq_plus.svg)](https://badge.fury.io/rb/rubocop-sidekiq_plus)
-[![CI](https://github.com/ydah/rubocop-sidekiq/actions/workflows/ci.yml/badge.svg)](https://github.com/ydah/rubocop-sidekiq/actions/workflows/ci.yml)
+[![CI](https://github.com/ydah/rubocop-sidekiq/actions/workflows/main.yml/badge.svg)](https://github.com/ydah/rubocop-sidekiq/actions/workflows/main.yml)
 
 A [RuboCop](https://github.com/rubocop/rubocop) extension focused on enforcing [Sidekiq](https://github.com/sidekiq/sidekiq) best practices and coding conventions.
 
