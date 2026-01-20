@@ -21,19 +21,10 @@ bundle install
 
 ## Usage
 
-### RuboCop 1.72+ (Recommended)
-
 Add the following to your `.rubocop.yml`:
 
 ```yaml
 plugins:
-  - rubocop-sidekiq
-```
-
-### Legacy (RuboCop < 1.72)
-
-```yaml
-require:
   - rubocop-sidekiq
 ```
 
