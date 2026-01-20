@@ -1,6 +1,6 @@
-# RuboCop Sidekiq
+# RuboCop Sidekiq+
 
-[![Gem Version](https://badge.fury.io/rb/rubocop-sidekiq.svg)](https://badge.fury.io/rb/rubocop-sidekiq)
+[![Gem Version](https://badge.fury.io/rb/rubocop-sidekiq_plus.svg)](https://badge.fury.io/rb/rubocop-sidekiq_plus)
 [![CI](https://github.com/ydah/rubocop-sidekiq/actions/workflows/ci.yml/badge.svg)](https://github.com/ydah/rubocop-sidekiq/actions/workflows/ci.yml)
 
 A [RuboCop](https://github.com/rubocop/rubocop) extension focused on enforcing [Sidekiq](https://github.com/sidekiq/sidekiq) best practices and coding conventions.
@@ -10,7 +10,7 @@ A [RuboCop](https://github.com/rubocop/rubocop) extension focused on enforcing [
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rubocop-sidekiq', require: false
+gem 'rubocop-sidekiq_plus', require: false
 ```
 
 And then execute:
@@ -27,14 +27,14 @@ Add the following to your `.rubocop.yml`:
 
 ```yaml
 plugins:
-  - rubocop-sidekiq
+  - rubocop-sidekiq_plus
 ```
 
 ### Legacy (RuboCop < 1.72)
 
 ```yaml
 require:
-  - rubocop-sidekiq
+  - rubocop-sidekiq_plus
 ```
 
 ## Available Cops

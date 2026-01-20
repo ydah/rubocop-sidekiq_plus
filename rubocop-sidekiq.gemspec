@@ -3,14 +3,14 @@
 require_relative 'lib/rubocop/sidekiq/version'
 
 Gem::Specification.new do |spec|
-  spec.name = 'rubocop-sidekiq'
+  spec.name = 'rubocop-sidekiq_plus'
   spec.version = RuboCop::Sidekiq::VERSION
   spec.authors = ['Yudai Takada']
   spec.email = ['t.yudai92@gmail.com']
 
   spec.summary = 'Code style checking for Sidekiq'
   spec.description = 'A RuboCop extension focused on enforcing Sidekiq best practices and coding conventions.'
-  spec.homepage = 'https://github.com/ydah/rubocop-sidekiq'
+  spec.homepage = 'https://github.com/ydah/rubocop-sidekiq+'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.0.0'
 
