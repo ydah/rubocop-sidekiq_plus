@@ -199,29 +199,85 @@ The following cops are available for [Sidekiq Pro](https://sidekiq.org/products/
 
 Ensure batch callback methods are named correctly (`on_complete`, `on_success`, `on_death`).
 
+### SidekiqPro/BatchRetryInCallback
+
+Check that jobs enqueued in batch callbacks have retry enabled for reliability.
+
+### SidekiqPro/BatchStatusPolling
+
+Discourage polling batch status in loops. Use batch callbacks instead. Disabled by default.
+
+### SidekiqPro/BatchWithoutCallback
+
+Recommend registering callbacks or descriptions for batches for tracking. Disabled by default.
+
 ### SidekiqPro/EmptyBatch
 
 Detect `batch.jobs` blocks that may be empty. Empty batches cause errors in Sidekiq Pro versions before 7.1.
+
+### SidekiqPro/ExpiringJobWithoutTTL
+
+Validate TTL range for expiring jobs. Too short TTL may cause jobs to expire before processing. Disabled by default.
 
 ### SidekiqPro/LargeArgumentInBatch
 
 Avoid passing large arguments to jobs within a batch. This can exhaust Redis memory when many jobs are enqueued simultaneously.
 
+### SidekiqPro/NestedBatchWithoutParent
+
+Ensure nested batches reference their parent batch for proper tracking.
+
+### SidekiqPro/ReliabilityNotEnabled
+
+Recommend enabling `super_fetch!` and `reliable_push!` for production reliability. Disabled by default.
+
 ## Sidekiq Enterprise Cops
 
 The following cops are available for [Sidekiq Enterprise](https://sidekiq.org/products/enterprise.html) users:
+
+### SidekiqEnt/EncryptionWithManyArguments
+
+Ensure sensitive data is consolidated in the last argument when using encryption. Sidekiq Enterprise only encrypts the last argument.
+
+### SidekiqEnt/EncryptionWithoutSecretBag
+
+Recommend proper secret bag usage with encryption. Warns when encrypted jobs have only ID-like arguments. Disabled by default.
+
+### SidekiqEnt/LeaderElectionWithoutBlock
+
+Warn about long-running operations in `Sidekiq.leader?` checks. Prefer delegating work to jobs. Disabled by default.
 
 ### SidekiqEnt/LimiterNotReused
 
 Create rate limiters as class constants for reuse. Creating limiters inside the `perform` method causes Redis memory leaks.
 
+### SidekiqEnt/LimiterWithoutLockTimeout
+
+Recommend setting `lock_timeout` for concurrent limiters to match job execution time.
+
 ### SidekiqEnt/LimiterWithoutWaitTimeout
 
 Specify `wait_timeout` option for rate limiters to avoid blocking worker threads indefinitely.
 
+### SidekiqEnt/PeriodicJobInvalidCron
+
+Validate cron expressions for periodic jobs.
+
+### SidekiqEnt/PeriodicJobWithArguments
+
+Periodic jobs should not require arguments. Use optional arguments or the `args` option in periodic registration.
+
+### SidekiqEnt/UniqueJobTooShortTTL
+
+Warn about unique jobs with too short TTL that may expire during retries.
+
 ### SidekiqEnt/UniqueJobWithoutTTL
 
 Require `unique_for` option when using `unique_until`. Without a TTL, uniqueness locks may persist indefinitely if jobs fail.
+
+### SidekiqEnt/UniqueUntilMismatch
+
+Validate `unique_until` option values. Avoid `unique_until: :start` which may cause concurrent execution.
 
 ## Configuration
 
@@ -239,6 +295,12 @@ All cops are enabled by default except for:
 - `Sidekiq/PreferSidekiqOverActiveJob`
 - `Sidekiq/RetryZero`
 - `Sidekiq/SelfSchedulingJob`
+- `SidekiqPro/BatchStatusPolling`
+- `SidekiqPro/BatchWithoutCallback`
+- `SidekiqPro/ExpiringJobWithoutTTL`
+- `SidekiqPro/ReliabilityNotEnabled`
+- `SidekiqEnt/EncryptionWithoutSecretBag`
+- `SidekiqEnt/LeaderElectionWithoutBlock`
 
 Example configuration:
 
