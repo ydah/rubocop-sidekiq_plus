@@ -1,0 +1,5 @@
+name: rubocop-sidekiq_plus
+title: RuboCop Sidekiq
+version: ~
+nav:
+  - modules/ROOT/nav.adoc

@@ -1,0 +1,40 @@
+= Development
+
+This page describes considerations when developing Sidekiq cops. It is intended to be a
+complement to the general https://docs.rubocop.org/rubocop/development.html[RuboCop development documentation].
+
+== Create a new cop
+
+NOTE: Clone the repository and run `bundle install` if not done yet.
+
+Create the cop class and spec using existing cops as templates:
+
+* `lib/rubocop/cop/sidekiq/` for core Sidekiq cops
+* `lib/rubocop/cop/sidekiq_pro/` for Sidekiq Pro cops
+* `lib/rubocop/cop/sidekiq_ent/` for Sidekiq Enterprise cops
+
+Then add the new cop to `lib/rubocop/cop/sidekiq_cops.rb` and create a matching spec under:
+
+* `spec/rubocop/cop/sidekiq/`
+* `spec/rubocop/cop/sidekiq_pro/`
+* `spec/rubocop/cop/sidekiq_ent/`
+
+== Base classes
+
+Use the appropriate base class for the department:
+
+* `RuboCop::Cop::Sidekiq::Base`
+* `RuboCop::Cop::SidekiqPro::Base`
+* `RuboCop::Cop::SidekiqEnt::Base`
+
+== Update configuration and docs
+
+After adding a cop, update the generated files:
+
+[source,sh]
+----
+$ bundle exec rake build_config
+$ bundle exec rake generate_cops_documentation
+----
+
+Finally, add an entry to `CHANGELOG.md` describing the new cop.

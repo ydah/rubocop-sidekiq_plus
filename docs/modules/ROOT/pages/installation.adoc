@@ -1,0 +1,17 @@
+= Installation
+
+Install the `rubocop-sidekiq_plus` gem:
+
+[source,bash]
+----
+gem install rubocop-sidekiq_plus
+----
+
+or add it to your `Gemfile`:
+
+[source,ruby]
+----
+gem 'rubocop-sidekiq_plus', require: false
+----
+
+Then run `bundle install`.

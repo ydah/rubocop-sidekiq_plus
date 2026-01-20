@@ -1,0 +1,22 @@
+= RuboCop Sidekiq+
+
+Sidekiq-specific analysis for your projects, as an extension to
+https://github.com/rubocop/rubocop[RuboCop].
+
+RuboCop Sidekiq+ follows the https://docs.rubocop.org/rubocop/versioning.html[RuboCop versioning guide].
+In a nutshell, between major versions new cops are introduced in a special `pending` status.
+That means that they won't be run unless explicitly told otherwise.
+RuboCop will warn on start that certain cops are neither explicitly enabled and disabled.
+On a major version release, all `pending` cops are enabled.
+
+== Project Goals
+
+* Enforce Sidekiq best practices and safe job patterns
+* Catch common reliability and performance pitfalls early
+* Provide guidance for Sidekiq Pro and Enterprise features when available
+
+== Non-goals
+
+* Validate runtime Sidekiq configuration or operational settings
+* Replace Sidekiq's own documentation and runtime checks
+* Enforce application architecture or business-specific conventions

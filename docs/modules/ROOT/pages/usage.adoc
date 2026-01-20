@@ -1,0 +1,56 @@
+= Usage
+
+You need to tell RuboCop to load the Sidekiq extension.
+There are two ways to do this:
+
+== RuboCop configuration file
+
+Put this into your `.rubocop.yml`:
+
+----
+plugins:
+  - rubocop-sidekiq
+----
+
+Now you can run `rubocop` and it will automatically load the RuboCop Sidekiq+ cops
+alongside the standard cops.
+
+NOTE: The plugin system is supported in RuboCop 1.72+. In earlier versions, use `require` instead of `plugins`.
+
+[source,yaml]
+----
+# .rubocop.yml
+require:
+  - rubocop-sidekiq_plus
+----
+
+== Sidekiq Pro and Enterprise cops
+
+The Pro and Enterprise departments are included with the plugin. If you do not use
+Sidekiq Pro or Enterprise features, disable those departments:
+
+[source,yaml]
+----
+# .rubocop.yml
+SidekiqPro:
+  Enabled: false
+
+SidekiqEnt:
+  Enabled: false
+----
+
+== Command line
+
+[source,bash]
+----
+$ rubocop --plugin rubocop-sidekiq_plus
+----
+
+== Rake task
+
+[source,ruby]
+----
+RuboCop::RakeTask.new do |task|
+  task.plugins << 'rubocop-sidekiq_plus'
+end
+----
