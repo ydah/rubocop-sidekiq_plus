@@ -43,3 +43,15 @@ require_relative 'sidekiq/retry_specified'
 require_relative 'sidekiq/transaction_leak'
 require_relative 'sidekiq/unknown_sidekiq_option'
 require_relative 'sidekiq/using_puts_or_print'
+
+# Sidekiq Pro Cops
+require_relative 'sidekiq_pro/base'
+require_relative 'sidekiq_pro/batch_callback_method'
+require_relative 'sidekiq_pro/empty_batch'
+require_relative 'sidekiq_pro/large_argument_in_batch'
+
+# Sidekiq Enterprise Cops
+require_relative 'sidekiq_ent/base'
+require_relative 'sidekiq_ent/limiter_not_reused'
+require_relative 'sidekiq_ent/limiter_without_wait_timeout'
+require_relative 'sidekiq_ent/unique_job_without_ttl'

@@ -191,6 +191,38 @@ Detect unknown or unsupported keys in `sidekiq_options`.
 
 Use `logger` instead of `puts`/`print` in jobs.
 
+## Sidekiq Pro Cops
+
+The following cops are available for [Sidekiq Pro](https://sidekiq.org/products/pro.html) users:
+
+### SidekiqPro/BatchCallbackMethod
+
+Ensure batch callback methods are named correctly (`on_complete`, `on_success`, `on_death`).
+
+### SidekiqPro/EmptyBatch
+
+Detect `batch.jobs` blocks that may be empty. Empty batches cause errors in Sidekiq Pro versions before 7.1.
+
+### SidekiqPro/LargeArgumentInBatch
+
+Avoid passing large arguments to jobs within a batch. This can exhaust Redis memory when many jobs are enqueued simultaneously.
+
+## Sidekiq Enterprise Cops
+
+The following cops are available for [Sidekiq Enterprise](https://sidekiq.org/products/enterprise.html) users:
+
+### SidekiqEnt/LimiterNotReused
+
+Create rate limiters as class constants for reuse. Creating limiters inside the `perform` method causes Redis memory leaks.
+
+### SidekiqEnt/LimiterWithoutWaitTimeout
+
+Specify `wait_timeout` option for rate limiters to avoid blocking worker threads indefinitely.
+
+### SidekiqEnt/UniqueJobWithoutTTL
+
+Require `unique_for` option when using `unique_until`. Without a TTL, uniqueness locks may persist indefinitely if jobs fail.
+
 ## Configuration
 
 All cops are enabled by default except for:
