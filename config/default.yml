@@ -267,6 +267,13 @@ Sidekiq/UnknownSidekiqOption:
   VersionAdded: '0.1'
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UnknownSidekiqOption
 
+Sidekiq/UnsafeQueueOperation:
+  Description: Avoid unsafe queue/set iteration and lookup operations.
+  Enabled: true
+  Safe: false
+  VersionAdded: "<<next>>"
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UnsafeQueueOperation
+
 SidekiqPro:
   Enabled: false
   DocumentationBaseURL: https://github.com/ydah/rubocop-sidekiq/blob/main/docs/modules/ROOT/pages
@@ -319,6 +326,12 @@ SidekiqPro/ReliabilityNotEnabled:
   Include:
     - config/initializers/sidekiq.rb
   Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/ReliabilityNotEnabled
+
+SidekiqPro/PreferDeleteJob:
+  Description: Prefer Sidekiq Pro delete_job/delete_by_class over manual iteration.
+  Enabled: false
+  VersionAdded: "<<next>>"
+  Reference: https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/PreferDeleteJob
 
 SidekiqEnt:
   Enabled: false

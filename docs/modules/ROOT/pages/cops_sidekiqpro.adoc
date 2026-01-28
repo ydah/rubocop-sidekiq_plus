@@ -421,6 +421,50 @@ class ProcessBatchJob
 end
 ----
 
+[#sidekiqpropreferdeletejob]
+== SidekiqPro/PreferDeleteJob
+
+|===
+| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
+
+| Disabled
+| Yes
+| No
+| <<next>>
+| -
+|===
+
+Recommends using Sidekiq Pro's `delete_job` or `delete_by_class` methods
+instead of iterating through queues and deleting jobs manually.
+
+Manual iteration and deletion has race conditions and is not scalable.
+Sidekiq Pro provides atomic operations that are safer and more efficient.
+
+[#examples-sidekiqpropreferdeletejob]
+=== Examples
+
+[source,ruby]
+----
+# bad - iterating and deleting jobs
+Sidekiq::Queue.new.each do |job|
+  job.delete if job.jid == target_jid
+end
+
+# bad - using select then delete
+Sidekiq::Queue.new.select { |job| job.item['class'] == 'MyJob' }.each(&:delete)
+
+# good - use Sidekiq Pro's delete_job
+Sidekiq::Queue.new('default').delete_job(jid)
+
+# good - use Sidekiq Pro's delete_by_class
+Sidekiq::Queue.new('default').delete_by_class('MyJob')
+----
+
+[#references-sidekiqpropreferdeletejob]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/SidekiqPro/PreferDeleteJob
+
 [#sidekiqproreliabilitynotenabled]
 == SidekiqPro/ReliabilityNotEnabled
 

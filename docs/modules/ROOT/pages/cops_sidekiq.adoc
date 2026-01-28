@@ -1585,7 +1585,7 @@ Checks for unknown or unsupported options passed to sidekiq_options.
 [source,ruby]
 ----
 # bad
-sidekiq_options priorty: :high
+sidekiq_options priority: :high
 sidekiq_options unique: true
 
 # good
@@ -1596,3 +1596,58 @@ sidekiq_options queue: :critical, retry: 5
 === References
 
 * https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UnknownSidekiqOption
+
+[#sidekiqunsafequeueoperation]
+== Sidekiq/UnsafeQueueOperation
+
+|===
+| Enabled by default | Safe | Supports autocorrection | Version Added | Version Changed
+
+| Enabled
+| No
+| No
+| <<next>>
+| -
+|===
+
+Checks for unsafe Sidekiq queue/set iteration and lookup operations.
+
+The Sidekiq API operates on shared mutable data structures within Redis
+without locks. Iteration through queues/sets is best effort and results
+cannot be guaranteed. For example, `find_job` might miss a job if the
+queue is mutated during iteration.
+
+These operations are not scalable and should not be used in an automated
+fashion or in bulk as part of your application functionality.
+
+[#safety-sidekiqunsafequeueoperation]
+=== Safety
+
+This cop may flag legitimate uses in rake tasks or manual repair scripts.
+Use `# rubocop:disable` comments for those cases.
+
+[#examples-sidekiqunsafequeueoperation]
+=== Examples
+
+[source,ruby]
+----
+# bad - find_job has race conditions
+Sidekiq::Queue.new.find_job(jid)
+
+# bad - iterating and deleting jobs
+Sidekiq::Queue.new.each { |job| job.delete }
+
+# bad - scanning retry set
+Sidekiq::RetrySet.new.select { |job| job.jid == jid }
+
+# bad - scanning scheduled set
+Sidekiq::ScheduledSet.new.find { |job| job.item['class'] == 'MyJob' }
+
+# good - use Sidekiq Pro's delete_job/delete_by_class if available
+# or reconsider the design to avoid queue scanning
+----
+
+[#references-sidekiqunsafequeueoperation]
+=== References
+
+* https://www.rubydoc.info/gems/rubocop-sidekiq_plus/RuboCop/Cop/Sidekiq/UnsafeQueueOperation

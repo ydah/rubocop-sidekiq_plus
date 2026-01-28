@@ -7,7 +7,7 @@ module RuboCop
       #
       # @example
       #   # bad
-      #   sidekiq_options priorty: :high
+      #   sidekiq_options priority: :high
       #   sidekiq_options unique: true
       #
       #   # good
