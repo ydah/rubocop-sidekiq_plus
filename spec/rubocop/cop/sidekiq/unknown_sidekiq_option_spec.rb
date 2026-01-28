@@ -9,8 +9,8 @@ RSpec.describe RuboCop::Cop::Sidekiq::UnknownSidekiqOption, :config do
       class MyJob
         include Sidekiq::Job
 
-        sidekiq_options priorty: :high
-                        ^^^^^^^^^^^^^^ Unknown or unsupported Sidekiq option `priorty` in `sidekiq_options`.
+        sidekiq_options priority: :high
+                        ^^^^^^^^^^^^^^^ Unknown or unsupported Sidekiq option `priority` in `sidekiq_options`.
       end
     RUBY
   end

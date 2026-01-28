@@ -43,6 +43,7 @@ require_relative 'sidekiq/retry_specified'
 require_relative 'sidekiq/transaction_leak'
 require_relative 'sidekiq/unknown_sidekiq_option'
 require_relative 'sidekiq/puts_or_print_usage'
+require_relative 'sidekiq/unsafe_queue_operation'
 
 # Sidekiq Pro Cops
 require_relative 'sidekiq_pro/base'
@@ -55,6 +56,7 @@ require_relative 'sidekiq_pro/expiring_job_without_ttl'
 require_relative 'sidekiq_pro/large_argument_in_batch'
 require_relative 'sidekiq_pro/nested_batch_without_parent'
 require_relative 'sidekiq_pro/reliability_not_enabled'
+require_relative 'sidekiq_pro/prefer_delete_job'
 
 # Sidekiq Enterprise Cops
 require_relative 'sidekiq_ent/base'
